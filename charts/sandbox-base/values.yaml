@@ -1,13 +1,24 @@
-# clusterDomain contains the domain under which all resources are deployed. e.g. example.com
+# The source repo containing the sandbox-apps helm charts.
+appsHelmSourceURL: https://github.com/clhain/sandbox-helm-charts.git
+# The path to the sandbox-apps helm chart.
+appsHelmSourcePath: charts/sandbox-apps
+# The target revision of the sandbox helm chart repo to pull from.
+appsHelmSourceTargetRevision: sandbox-apps-0.0.1
+
+# clusterDomain is the domain under which all resources are deployed. e.g. example.com
 clusterDomain:
+# clusterIngressIP is the IP address which is to be assigned to the nginx ingress controller.
 clusterIngressIP:
+# oidcClientID is the OIDC Client's ID to be used with oauth2 proxy.
 oidcClientID:
+# oidcClientSecret is the OIDC Client's Secret to be used with oauth2 proxy.
 oidcClientSecret:
+# oidcIssuerURL is the OIDC Issuer URL to be used with oauth2 proxy.
 oidcIssuerURL:
-letsEncryptContactEmail:
+# oidcPermittedEmailDomains is the set of email domains allowed to access resources behind the oauth2 proxy.
 oidcPermittedEmailDomains: "*"
-nginxIngressRepo:
-nginxIngressTag:
+# letsEncryptContactEmail is the email address to use when registering let's encrypt certs.
+letsEncryptContactEmail:
 
 # Whether to deploy a secret value containing Oauth Client secret settings.
 argoOuathSecret:
