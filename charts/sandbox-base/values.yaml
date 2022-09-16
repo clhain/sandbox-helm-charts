@@ -1,0 +1,60 @@
+# clusterDomain contains the domain under which all resources are deployed. e.g. example.com
+clusterDomain:
+clusterIngressIP:
+oidcClientID:
+oidcClientSecret:
+oidcIssuerURL:
+letsEncryptContactEmail:
+oidcPermittedEmailDomains: "*"
+nginxIngressRepo:
+nginxIngressTag:
+
+# Whether to deploy a secret value containing Oauth Client secret settings.
+argoOuathSecret:
+  # Enable the secret resource.
+  enable: true
+  # The Oauth2 Client ID to add to the secret resource.
+  clientID: "{{ .Values.oidcClientID }}"
+  # The Oauth2 Client Secret to add to the resource.
+  clientSecret: "{{ .Values.oidcClientSecret }}"
+  # The name of the Oauth2 secret resource to deploy.
+  secretName: oauth-secret
+
+# Setting to pass to the public Argo CD Helm Charts
+# https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
+argo-cd:
+  crds:
+    # Required because argo-cd helm handles crds as templates rather than in crds directory.
+    install: false
+  server:
+    # Set the default policy for logged in GUI users to readonly.
+    rbacConfig:
+      policy.default: role:readonly
+    config:
+      resource.customizations.health.argoproj.io_Application: |-
+        hs = {}
+        hs.status = "Progressing"
+        hs.message = ""
+        if obj.status ~= nil then
+          if obj.status.health ~= nil then
+            hs.status = obj.status.health.status
+            if obj.status.health.message ~= nil then
+              hs.message = obj.status.health.message
+            end
+          end
+        end
+        return hs 
+    # Example values for Azure AD
+    # config:
+    #   oidc.config: |
+    #     name: AzureAD
+    #     issuer: {{ YOUR_OIDC_ISSUER_URL }}
+    #     clientID: $oauth-secret:oidc.clientId
+    #     clientSecret: $oauth-secret:oidc.clientSecret
+    #     requestedIDTokenClaims:
+    #       groups:
+    #         essential: true
+    #     requestedScopes:
+    #       - openid
+    #       - profile
+    #       - email
