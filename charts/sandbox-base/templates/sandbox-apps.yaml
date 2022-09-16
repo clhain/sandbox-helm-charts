@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sandbox-apps
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  project: default
+  source:
+    repoURL: {{ .Values.appsHelmSourceURL }}
+    path: {{ .Values.appsHelmSourcePath }}
+    targetRevision: {{ .Values.appsHelmSourceTargetRevision }}
+    helm:
+      parameters:
+        {{- if .Values.paramOverrides }}
+        {{- range $k,$v := .Values.paramOverrides }}
+        - name: {{ $k }}
+          value: {{ include "render-value" ( dict "value" $v "context" $) }}
+        {{- end }}
+        {{- end }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

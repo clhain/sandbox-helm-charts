@@ -31,6 +31,18 @@ argoOuathSecret:
   # The name of the Oauth2 secret resource to deploy.
   secretName: oauth-secret
 
+# Parameter overrides to pass to the sandbox-apps helm chart.
+paramOverrides:
+  clusterDomain: "{{ .Values.clusterDomain }}"
+  clusterIngressIP: "{{ .Values.clusterIngressIP }}"
+  oidcClientID: "{{ .Values.oidcClientID }}"
+  oidcClientSecret: "{{ .Values.oidcClientSecret }}"
+  oidcPermittedEmailDomains: "{{ .Values.oidcPermittedEmailDomains }}"
+  oidcIssuerURL: "{{ .Values.oidcIssuerURL }}"
+  oidcPermittedEmailDomains: "{{ .Values.oidcPermittedEmailDomains }}"
+  letsEncryptContactEmail: "{{ .Values.letsEncryptContactEmail }}"
+
+
 # Setting to pass to the public Argo CD Helm Charts
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 argo-cd:
