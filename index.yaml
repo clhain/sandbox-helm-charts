@@ -1,0 +1,27 @@
+apiVersion: v1
+entries:
+  sandbox-apps:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2022-09-16T20:35:37.469688092Z"
+    digest: 9063914f16fd03f9a9e1fe7c8c195ad722c154fa085469a1b084849d83354b3b
+    name: sandbox-apps
+    type: application
+    urls:
+    - https://github.com/clhain/sandbox-helm-charts/releases/download/sandbox-apps-0.0.1/sandbox-apps-0.0.1.tgz
+    version: 0.0.1
+  sandbox-base:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2022-09-16T20:35:37.63768619Z"
+    dependencies:
+    - name: argo-cd
+      repository: https://argoproj.github.io/argo-helm
+      version: 5.4.2
+    digest: 95878746acbfe2728bdfc21fb665b194d26534da92ebcb87f5d57c90c3235cb3
+    name: sandbox-base
+    type: application
+    urls:
+    - https://github.com/clhain/sandbox-helm-charts/releases/download/sandbox-base-0.0.1/sandbox-base-0.0.1.tgz
+    version: 0.0.1
+generated: "2022-09-16T20:35:37.242868766Z"
