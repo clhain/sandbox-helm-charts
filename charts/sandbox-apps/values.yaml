@@ -69,6 +69,19 @@ default:
         jsonPointers:
         - /metadata/annotations
 apps:
+  # Parameters for the Argo Virtual Server ArgoCD Application.
+  argo-virtual-server:
+    enabled: true
+    destination:
+      namespace: argocd
+    source:
+      path: services/argo-virtual-server
+      helm:
+        params:
+          # The domain of the cluster installation e.g. example.com
+          clusterDomain: "{{ .Values.clusterDomain }}"
+    syncWave: "5"
+
   # Parameters for the cert-manager ArgoCD Application.
   cert-manager:
     enabled: true
@@ -83,16 +96,38 @@ apps:
           letsEncryptIssuer.contactEmail: "{{ .Values.letsEncryptContactEmail }}"
     syncWave: "1"
 
-  # Parameters for the cert-manager ArgoCD Application.
-  opentelemetry-operator:
+  # Parameters for the OPA gateway ArgoCD Application.
+  gateway:
     enabled: true
     destination:
-      namespace: opentelemetry-operator
+      namespace: gateway
     source:
-      path: services/opentelemetry-operator
+      path: services/gateway
     syncWave: "2"
 
-  # Parameters for the cert-manager ArgoCD Application.
+  # Parameters for the grafana ArgoCD Application.
+  grafana:
+    enabled: true
+    destination:
+      namespace: grafana
+    source:
+      path: services/grafana
+      helm:
+        params:
+          # The domain of the cluster installation e.g. example.com
+          clusterDomain: "{{ .Values.clusterDomain }}"
+    syncWave: "6"
+
+  # Parameters for the loki ArgoCD Application.
+  loki:
+    enabled: true
+    destination:
+      namespace: loki
+    source:
+      path: services/loki
+    syncWave: "5"
+
+  # Parameters for the nginx-ingress ArgoCD Application.
   nginx-ingress:
     enabled: true
     destination:
@@ -107,58 +142,17 @@ apps:
           # The IP of the loadbalancer to use.
           nginx-ingress.controller.service.loadBalancerIP: "{{ .Values.clusterIngressIP }}"
     syncWave: "4"
-  argo-virtual-server:
-    enabled: true
-    destination:
-      namespace: argocd
-    source:
-      path: services/argo-virtual-server
-      helm:
-        params:
-          # The domain of the cluster installation e.g. example.com
-          clusterDomain: "{{ .Values.clusterDomain }}"
-    syncWave: "5"
-  # Parameters for the cert-manager ArgoCD Application.
+
+  # Parameters for the nginx-mesh ArgoCD Application.
   nginx-mesh:
     enabled: true
     destination:
       namespace: nginx-mesh
     source:
       path: services/nginx-mesh
-    syncWave: "4"
+    syncWave: "3"
 
-  # Parameters for the cert-manager ArgoCD Application.
-  grafana:
-    enabled: true
-    destination:
-      namespace: grafana
-    source:
-      path: services/grafana
-      helm:
-        params:
-          # The domain of the cluster installation e.g. example.com
-          clusterDomain: "{{ .Values.clusterDomain }}"
-    syncWave: "6"
-
-  # Parameters for the cert-manager ArgoCD Application.
-  loki:
-    enabled: true
-    destination:
-      namespace: loki
-    source:
-      path: services/loki
-    syncWave: "5"
-
-  # Parameters for the cert-manager ArgoCD Application.
-  tempo:
-    enabled: true
-    destination:
-      namespace: tempo
-    source:
-      path: services/tempo
-    syncWave: "5"
-
-  # Parameters for the cert-manager ArgoCD Application.
+  # Parameters for the oauth-proxy ArgoCD Application.
   oauth-proxy:
     enabled: true
     destination:
@@ -183,8 +177,29 @@ apps:
           oauth2-proxy.extraEnv[3].name: OAUTH2_PROXY_EMAIL_DOMAINS
           oauth2-proxy.extraEnv[3].value: "{{ .Values.oidcPermittedEmailDomains }}"
     syncWave: "5"
-
+  
   # Parameters for the cert-manager ArgoCD Application.
+  opentelemetry-operator:
+    enabled: true
+    destination:
+      namespace: opentelemetry-operator
+    source:
+      path: services/opentelemetry-operator
+    syncWave: "2"
+
+  # Parameters for the prometheus-operator ArgoCD Application.
+  prometheus-operator:
+    enabled: true
+    destination:
+      namespace: prometheus-operator
+    source:
+      path: services/prometheus-operator
+      extraSourceFields: |
+        helm:
+          skipCrds: true
+    syncWave: "2"
+
+  # Parameters for the prometheus-operator-crds ArgoCD Application.
   prometheus-operator-crds:
     enabled: true
     destination:
@@ -201,14 +216,20 @@ apps:
       - Replace=true
     syncWave: "1"
 
-  # Parameters for the cert-manager ArgoCD Application.
-  prometheus-operator:
+  # Parameters for the Sealed Secrets ArgoCD Application.
+  sealed-secrets:
     enabled: true
     destination:
-      namespace: prometheus-operator
+      namespace: sealed-secrets
     source:
-      path: services/prometheus-operator
-      extraSourceFields: |
-        helm:
-          skipCrds: true
+      path: services/sealed-secrets
     syncWave: "2"
+
+  # Parameters for the tempo ArgoCD Application.
+  tempo:
+    enabled: true
+    destination:
+      namespace: tempo
+    source:
+      path: services/tempo
+    syncWave: "5"
