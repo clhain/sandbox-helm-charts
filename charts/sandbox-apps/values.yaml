@@ -58,9 +58,9 @@ default:
       # Argocd Application path parameter.
       path: null
       # Argocd Application repoURL parameter.
-      repoURL: https://github.com/clhain/opinionated-cluster-argo.git
+      repoURL: https://github.com/clhain/sandbox.git
       # Argocd Application targetRevision parameter.
-      targetRevision: bootstrap
+      targetRevision: HEAD
     # Argocd Application extra fields to include.
     extraFields: |
       ignoreDifferences:
