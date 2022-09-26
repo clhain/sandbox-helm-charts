@@ -96,13 +96,13 @@ apps:
           letsEncryptIssuer.contactEmail: "{{ .Values.letsEncryptContactEmail }}"
     syncWave: "1"
 
-  # Parameters for the OPA gateway ArgoCD Application.
-  gateway:
+  # Parameters for the OPA gatekeeper ArgoCD Application.
+  gatekeeper:
     enabled: true
     destination:
-      namespace: gateway
+      namespace: gatekeeper
     source:
-      path: services/gateway
+      path: services/gatekeeper
     syncWave: "2"
 
   # Parameters for the grafana ArgoCD Application.

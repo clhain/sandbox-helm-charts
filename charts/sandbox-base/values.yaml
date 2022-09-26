@@ -3,7 +3,7 @@ appsHelmSourceURL: https://github.com/clhain/sandbox-helm-charts.git
 # The path to the sandbox-apps helm chart.
 appsHelmSourcePath: charts/sandbox-apps
 # The target revision of the sandbox helm chart repo to pull from.
-appsHelmSourceTargetRevision: sandbox-apps-0.0.2
+appsHelmSourceTargetRevision: HEAD
 
 # clusterDomain is the domain under which all resources are deployed. e.g. example.com
 clusterDomain:
