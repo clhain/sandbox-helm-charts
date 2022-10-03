@@ -1,11 +1,11 @@
 name: Upgrade helm charts minor versions
  
 on:
- schedule:
-   - cron: "0 8 * * 1"   # weekly on 08:00 Monday
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 1"   # weekly on 08:00 Monday
  
 jobs:
-  workflow_dispatch:
   upgrade-helm-charts:
     runs-on: ubuntu-latest
     steps:
