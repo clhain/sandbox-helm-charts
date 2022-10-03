@@ -177,7 +177,7 @@ apps:
           oauth2-proxy.extraEnv[3].name: OAUTH2_PROXY_EMAIL_DOMAINS
           oauth2-proxy.extraEnv[3].value: "{{ .Values.oidcPermittedEmailDomains }}"
     syncWave: "5"
-  
+
   # Parameters for the cert-manager ArgoCD Application.
   opentelemetry-operator:
     enabled: true

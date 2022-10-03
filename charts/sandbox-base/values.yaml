@@ -39,7 +39,6 @@ paramOverrides:
   oidcClientSecret: "{{ .Values.oidcClientSecret }}"
   oidcPermittedEmailDomains: "{{ .Values.oidcPermittedEmailDomains }}"
   oidcIssuerURL: "{{ .Values.oidcIssuerURL }}"
-  oidcPermittedEmailDomains: "{{ .Values.oidcPermittedEmailDomains }}"
   letsEncryptContactEmail: "{{ .Values.letsEncryptContactEmail }}"
 
 
@@ -66,7 +65,7 @@ argo-cd:
             end
           end
         end
-        return hs 
+        return hs
     # Example values for Azure AD
     # config:
     #   oidc.config: |
