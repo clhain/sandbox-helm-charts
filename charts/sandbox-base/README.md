@@ -1,6 +1,8 @@
 # sandbox-base
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+
+Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbox-Apps chart.
 
 ## Maintainers
 
@@ -12,7 +14,7 @@
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 5.4.2 |
+| https://argoproj.github.io/argo-helm | argo-cd | 5.5.7 |
 
 ## Values
 
@@ -22,7 +24,7 @@
 | appsHelmSourceTargetRevision | string | `"HEAD"` |  |
 | appsHelmSourceURL | string | `"https://github.com/clhain/sandbox-helm-charts.git"` |  |
 | argo-cd.crds.install | bool | `false` |  |
-| argo-cd.server.config."resource.customizations.health.argoproj.io_Application" | string | `"hs = {}\nhs.status = \"Progressing\"\nhs.message = \"\"\nif obj.status ~= nil then\n  if obj.status.health ~= nil then\n    hs.status = obj.status.health.status\n    if obj.status.health.message ~= nil then\n      hs.message = obj.status.health.message\n    end\n  end\nend\nreturn hs "` |  |
+| argo-cd.server.config."resource.customizations.health.argoproj.io_Application" | string | `"hs = {}\nhs.status = \"Progressing\"\nhs.message = \"\"\nif obj.status ~= nil then\n  if obj.status.health ~= nil then\n    hs.status = obj.status.health.status\n    if obj.status.health.message ~= nil then\n      hs.message = obj.status.health.message\n    end\n  end\nend\nreturn hs"` |  |
 | argo-cd.server.rbacConfig."policy.default" | string | `"role:readonly"` |  |
 | argoOuathSecret.clientID | string | `"{{ .Values.oidcClientID }}"` |  |
 | argoOuathSecret.clientSecret | string | `"{{ .Values.oidcClientSecret }}"` |  |
@@ -41,7 +43,6 @@
 | paramOverrides.oidcClientID | string | `"{{ .Values.oidcClientID }}"` |  |
 | paramOverrides.oidcClientSecret | string | `"{{ .Values.oidcClientSecret }}"` |  |
 | paramOverrides.oidcIssuerURL | string | `"{{ .Values.oidcIssuerURL }}"` |  |
-| paramOverrides.oidcPermittedEmailDomains | string | `"{{ .Values.oidcPermittedEmailDomains }}"` |  |
 | paramOverrides.oidcPermittedEmailDomains | string | `"{{ .Values.oidcPermittedEmailDomains }}"` |  |
 
 ----------------------------------------------
