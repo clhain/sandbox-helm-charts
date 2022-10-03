@@ -1,0 +1,10 @@
+# See https://github.com/helm/chart-testing#configuration
+remote: origin
+target-branch: main
+chart-dirs:
+  - charts
+chart-repos:
+  - sandbox-charts=https://clhain.github.io/sandbox-helm-charts
+  - argo-cd=https://argoproj.github.io/argo-helm
+helm-extra-args: --timeout 600s
+validate-maintainers: false
