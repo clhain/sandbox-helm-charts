@@ -2,8 +2,10 @@
 appsHelmSourceURL: https://github.com/clhain/sandbox-helm-charts.git
 # The path to the sandbox-apps helm chart.
 appsHelmSourcePath: charts/sandbox-apps
-# The target revision of the sandbox helm chart repo to pull from.
+# The target revision of the sandbox-apps helm chart repo to pull from.
 appsHelmSourceTargetRevision: HEAD
+# The default sandbox-apps application branch / tag to pull from
+appsSourceTargetRevision: HEAD
 
 # clusterDomain is the domain under which all resources are deployed. e.g. example.com
 clusterDomain:
@@ -40,6 +42,7 @@ paramOverrides:
   oidcPermittedEmailDomains: "{{ .Values.oidcPermittedEmailDomains }}"
   oidcIssuerURL: "{{ .Values.oidcIssuerURL }}"
   letsEncryptContactEmail: "{{ .Values.letsEncryptContactEmail }}"
+  default.app.source.targetRevision: "{{ .Values.appsSourceTargetRevision }}"
 
 
 # Setting to pass to the public Argo CD Helm Charts

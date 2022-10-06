@@ -1,7 +1,7 @@
-# clusterDomain is the domain under which all resources are deployed. e.g. example.com
-clusterDomain:
 # clusterIngressIP is the IP address which is to be assigned to the nginx ingress controller.
 clusterIngressIP:
+# clusterDomain is the domain under which all resources are deployed. e.g. example.com
+clusterDomain:
 # oidcClientID is the OIDC Client's ID to be used with oauth2 proxy.
 oidcClientID:
 # oidcClientSecret is the OIDC Client's Secret to be used with oauth2 proxy.
