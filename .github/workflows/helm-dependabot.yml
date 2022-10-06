@@ -1,3 +1,4 @@
+# Courtesy of https://blog.promaton.com/how-to-set-up-automated-helm-chart-upgrades-e292192a9aad
 name: Upgrade helm charts minor versions
  
 on:
@@ -27,10 +28,8 @@ jobs:
         run: |
           pip3 install pyaml==21.10.1
   
-      - name: install updateCli
-        run: |
-          curl -sL -o /tmp/updatecli_amd64.deb https://github.com/updatecli/updatecli/releases/download/v0.24.0/updatecli_amd64.deb
-          sudo apt install /tmp/updatecli_amd64.deb
+      - name: Install Updatecli in the runner
+        uses: updatecli/updatecli-action@v2
   
       - name: Run chart bumper script
         run: |
