@@ -58,6 +58,7 @@ jobs:
 
       - name: Render golden templates
         run: |
+          mkdir -p test/charts/golden
           find ./charts -maxdepth 1 -mindepth 1 -type d -exec helm dependency update {} \;
           find ./charts -maxdepth 1 -mindepth 1 -type d -exec /bin/bash -c "helm template --dry-run -f test/charts/chat_values/defaults.yaml foo {} | scripts/helm-fan-out.sh test/charts/golden/default" \;
           find ./charts -maxdepth 1 -mindepth 1 -type d -exec /bin/bash -c "helm template --dry-run -f test/charts/chat_values/disable_local_auth.yaml foo {} | scripts/helm-fan-out.sh test/charts/golden/disable_local_auth" \;
