@@ -1,6 +1,6 @@
 # sandbox-apps
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
 
 Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial configuration.
 
@@ -17,11 +17,13 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.argo-virtual-server.destination.namespace | string | `"argocd"` |  |
 | apps.argo-virtual-server.enabled | bool | `true` |  |
 | apps.argo-virtual-server.source.helm.params.clusterDomain | string | `"{{ .Values.clusterDomain }}"` |  |
+| apps.argo-virtual-server.source.helm.params.clusterTLSInsecure | string | `"{{ .Values.clusterTLSInsecure }}"` |  |
 | apps.argo-virtual-server.source.path | string | `"services/argo-virtual-server"` |  |
 | apps.argo-virtual-server.syncWave | string | `"5"` |  |
 | apps.cert-manager.destination.namespace | string | `"cert-manager"` |  |
 | apps.cert-manager.enabled | bool | `true` |  |
 | apps.cert-manager.source.helm.params."letsEncryptIssuer.contactEmail" | string | `"{{ .Values.letsEncryptContactEmail }}"` |  |
+| apps.cert-manager.source.helm.params.clusterTLSInsecure | string | `"{{ .Values.clusterTLSInsecure }}"` |  |
 | apps.cert-manager.source.path | string | `"services/cert-manager"` |  |
 | apps.cert-manager.syncWave | string | `"1"` |  |
 | apps.gatekeeper.destination.namespace | string | `"gatekeeper"` |  |
@@ -31,6 +33,7 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.grafana.destination.namespace | string | `"grafana"` |  |
 | apps.grafana.enabled | bool | `true` |  |
 | apps.grafana.source.helm.params.clusterDomain | string | `"{{ .Values.clusterDomain }}"` |  |
+| apps.grafana.source.helm.params.clusterTLSInsecure | string | `"{{ .Values.clusterTLSInsecure }}"` |  |
 | apps.grafana.source.path | string | `"services/grafana"` |  |
 | apps.grafana.syncWave | string | `"6"` |  |
 | apps.loki.destination.namespace | string | `"loki"` |  |
@@ -58,6 +61,8 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[3].name" | string | `"OAUTH2_PROXY_EMAIL_DOMAINS"` |  |
 | apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[3].value" | string | `"{{ .Values.oidcPermittedEmailDomains }}"` |  |
 | apps.oauth-proxy.source.helm.params.clusterDomain | string | `"{{ .Values.clusterDomain }}"` |  |
+| apps.oauth-proxy.source.helm.params.clusterLocalAuth | string | `"{{ .Values.clusterLocalAuth }}"` |  |
+| apps.oauth-proxy.source.helm.params.clusterTLSInsecure | string | `"{{ .Values.clusterTLSInsecure }}"` |  |
 | apps.oauth-proxy.source.path | string | `"services/oauth-proxy"` |  |
 | apps.oauth-proxy.syncWave | string | `"5"` |  |
 | apps.opentelemetry-operator.destination.namespace | string | `"opentelemetry-operator"` |  |
@@ -88,6 +93,8 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.tempo.syncWave | string | `"5"` |  |
 | clusterDomain | string | `nil` |  |
 | clusterIngressIP | string | `nil` |  |
+| clusterLocalAuth | bool | `true` |  |
+| clusterTLSInsecure | bool | `false` |  |
 | default.app.autoSyncPrune | bool | `true` |  |
 | default.app.destination.namespace | string | `nil` |  |
 | default.app.destination.server | string | `"https://kubernetes.default.svc"` |  |

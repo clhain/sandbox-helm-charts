@@ -16,7 +16,7 @@ oidcClientID:
 # oidcClientSecret is the OIDC Client's Secret to be used with oauth2 proxy.
 oidcClientSecret:
 # oidcIssuerURL is the OIDC Issuer URL to be used with oauth2 proxy.
-oidcIssuerURL:
+oidcIssuerURL: http://dex.localtest.me/dex
 # oidcPermittedEmailDomains is the set of email domains allowed to access resources behind the oauth2 proxy.
 oidcPermittedEmailDomains: "*"
 # letsEncryptContactEmail is the email address to use when registering let's encrypt certs.
