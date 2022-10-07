@@ -1,0 +1,5 @@
+clusterIngressIP: 1.1.1.1
+clusterDomain: example.com
+clusterTLSInsecure: false
+clusterLocalAuth: true
+letsEncryptContactEmail: "nobody@example.com"
