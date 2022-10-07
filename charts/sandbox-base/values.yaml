@@ -4,6 +4,7 @@ appsHelmSourceURL: https://github.com/clhain/sandbox-helm-charts.git
 appsHelmSourcePath: charts/sandbox-apps
 # The target revision of the sandbox-apps helm chart repo to pull from.
 appsHelmSourceTargetRevision: HEAD
+
 # The default sandbox-apps application branch / tag to pull from
 appsSourceTargetRevision: HEAD
 
@@ -11,14 +12,20 @@ appsSourceTargetRevision: HEAD
 clusterDomain:
 # clusterIngressIP is the IP address which is to be assigned to the nginx ingress controller.
 clusterIngressIP:
+# Disable all certificate generation and https auth callbacks (not recommended)
+clusterTLSInsecure: false
+# Enable a local Dex IDP with static admin account for oauth protected services.
+clusterLocalAuth: true
+
 # oidcClientID is the OIDC Client's ID to be used with oauth2 proxy.
-oidcClientID:
+oidcClientID: ""
 # oidcClientSecret is the OIDC Client's Secret to be used with oauth2 proxy.
-oidcClientSecret:
+oidcClientSecret: ""
 # oidcIssuerURL is the OIDC Issuer URL to be used with oauth2 proxy.
-oidcIssuerURL: http://dex.localtest.me/dex
+oidcIssuerURL: ""
 # oidcPermittedEmailDomains is the set of email domains allowed to access resources behind the oauth2 proxy.
 oidcPermittedEmailDomains: "*"
+
 # letsEncryptContactEmail is the email address to use when registering let's encrypt certs.
 letsEncryptContactEmail:
 
@@ -26,22 +33,11 @@ letsEncryptContactEmail:
 argoOuathSecret:
   # Enable the secret resource.
   enable: true
-  # The Oauth2 Client ID to add to the secret resource.
-  clientID: "{{ .Values.oidcClientID }}"
-  # The Oauth2 Client Secret to add to the resource.
-  clientSecret: "{{ .Values.oidcClientSecret }}"
   # The name of the Oauth2 secret resource to deploy.
   secretName: oauth-secret
 
 # Parameter overrides to pass to the sandbox-apps helm chart.
 paramOverrides:
-  clusterDomain: "{{ .Values.clusterDomain }}"
-  clusterIngressIP: "{{ .Values.clusterIngressIP }}"
-  oidcClientID: "{{ .Values.oidcClientID }}"
-  oidcClientSecret: "{{ .Values.oidcClientSecret }}"
-  oidcPermittedEmailDomains: "{{ .Values.oidcPermittedEmailDomains }}"
-  oidcIssuerURL: "{{ .Values.oidcIssuerURL }}"
-  letsEncryptContactEmail: "{{ .Values.letsEncryptContactEmail }}"
   default.app.source.targetRevision: "{{ .Values.appsSourceTargetRevision }}"
 
 
@@ -55,6 +51,8 @@ argo-cd:
     # Set the default policy for logged in GUI users to readonly.
     rbacConfig:
       policy.default: role:readonly
+    configEnabled: false
+    # If configEnabled is re-enabled, these defaults are added.
     config:
       resource.customizations.health.argoproj.io_Application: |-
         hs = {}
@@ -69,17 +67,15 @@ argo-cd:
           end
         end
         return hs
-    # Example values for Azure AD
-    # config:
-    #   oidc.config: |
-    #     name: AzureAD
-    #     issuer: {{ YOUR_OIDC_ISSUER_URL }}
-    #     clientID: $oauth-secret:oidc.clientId
-    #     clientSecret: $oauth-secret:oidc.clientSecret
-    #     requestedIDTokenClaims:
-    #       groups:
-    #         essential: true
-    #     requestedScopes:
-    #       - openid
-    #       - profile
-    #       - email
+      # oidc.config: |
+      #   name: AzureAD
+      #   issuer: {{ YOUR_OIDC_ISSUER_URL }}
+      #   clientID: $oauth-secret:oidc.clientId
+      #   clientSecret: $oauth-secret:oidc.clientSecret
+      #   requestedIDTokenClaims:
+      #     groups:
+      #       essential: true
+      #   requestedScopes:
+      #     - openid
+      #     - profile
+      #     - email
