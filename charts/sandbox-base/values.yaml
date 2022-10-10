@@ -30,7 +30,7 @@ oidcPermittedEmailDomains: "*"
 letsEncryptContactEmail: ""
 
 # Whether to deploy a secret value containing Oauth Client secret settings.
-argoOuathSecret:
+ouathSecret:
   # Enable the secret resource.
   enable: true
   # The name of the Oauth2 secret resource to deploy.
