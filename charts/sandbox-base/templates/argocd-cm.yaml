@@ -1,4 +1,4 @@
-{{- if not .Values.argo-cd.server.configEnabled}}
+{{- if not .Values.argo-cd.server.configEnabled }}
 ---
 apiVersion: v1
 kind: ConfigMap
