@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo-argocd-dex-server
+  labels:
+    helm.sh/chart: argo-cd-5.5.16
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/instance: foo
+    app.kubernetes.io/component: dex-server
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-dex-server
+      app.kubernetes.io/instance: foo
+  template:
+    metadata:
+      annotations:
+        checksum/cmd-params: 50a9d14d8d54b4784585f97f250c506d6f611d41a4b981b6dbb942d3ed796c5e
+      labels:
+        helm.sh/chart: argo-cd-5.5.16
+        app.kubernetes.io/name: argocd-dex-server
+        app.kubernetes.io/instance: foo
+        app.kubernetes.io/component: dex-server
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+    spec:
+      initContainers:
+      - name: copyutil
+        image: quay.io/argoproj/argocd:v2.4.14
+        imagePullPolicy: IfNotPresent
+        resources:
+          {}
+        command:
+        - cp
+        - -n
+        - /usr/local/bin/argocd
+        - /shared/argocd-dex
+        volumeMounts:
+        - mountPath: /shared
+          name: static-files
+        - mountPath: /tmp
+          name: dexconfig
+      containers:
+      - name: dex-server
+        image: ghcr.io/dexidp/dex:v2.35.1-distroless
+        imagePullPolicy: IfNotPresent
+        command:
+        - /shared/argocd-dex
+        args:
+        - rundex
+        env:
+          - name: ARGOCD_DEX_SERVER_DISABLE_TLS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: dexserver.disable.tls
+                optional: true
+        ports:
+        - name: http
+          containerPort: 5556
+          protocol: TCP
+        - name: grpc
+          containerPort: 5557
+          protocol: TCP
+        - name: metrics
+          containerPort: 5558
+          protocol: TCP
+        volumeMounts:
+        - name: static-files
+          mountPath: /shared
+        - name: dexconfig
+          mountPath: /tmp
+        - name: argocd-dex-server-tls
+          mountPath: /tls
+        resources:
+          {}
+      serviceAccountName: argocd-dex-server
+      volumes:
+      - name: static-files
+        emptyDir: {}
+      - name: dexconfig
+        emptyDir: {}
+      - name: argocd-dex-server-tls
+        secret:
+          secretName: argocd-dex-server-tls
+          optional: true
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: tls.key
+            path: tls.key
+          - key: ca.crt
+            path: ca.crt
+---

@@ -9,7 +9,7 @@ appsHelmSourceTargetRevision: HEAD
 appsSourceTargetRevision: HEAD
 
 # clusterDomain is the domain under which all resources are deployed. e.g. example.com
-clusterDomain:
+clusterDomain: ""
 # clusterIngressIP is the IP address which is to be assigned to the nginx ingress controller.
 clusterIngressIP:
 # Disable all certificate generation and https auth callbacks (not recommended)
@@ -27,7 +27,7 @@ oidcIssuerURL: ""
 oidcPermittedEmailDomains: "*"
 
 # letsEncryptContactEmail is the email address to use when registering let's encrypt certs.
-letsEncryptContactEmail:
+letsEncryptContactEmail: ""
 
 # Whether to deploy a secret value containing Oauth Client secret settings.
 argoOuathSecret:

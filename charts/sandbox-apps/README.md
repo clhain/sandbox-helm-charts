@@ -52,17 +52,11 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.nginx-mesh.syncWave | string | `"3"` |  |
 | apps.oauth-proxy.destination.namespace | string | `"oauth-proxy"` |  |
 | apps.oauth-proxy.enabled | bool | `true` |  |
-| apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[0].name" | string | `"OAUTH2_PROXY_COOKIE_DOMAINS"` |  |
-| apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[0].value" | string | `".{{ .Values.clusterDomain }}"` |  |
-| apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[1].name" | string | `"OAUTH2_PROXY_WHITELIST_DOMAINS"` |  |
-| apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[1].value" | string | `".{{ .Values.clusterDomain }}"` |  |
-| apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[2].name" | string | `"OAUTH2_PROXY_OIDC_ISSUER_URL"` |  |
-| apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[2].value" | string | `"{{ .Values.oidcIssuerURL }}"` |  |
-| apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[3].name" | string | `"OAUTH2_PROXY_EMAIL_DOMAINS"` |  |
-| apps.oauth-proxy.source.helm.params."oauth2-proxy.extraEnv[3].value" | string | `"{{ .Values.oidcPermittedEmailDomains }}"` |  |
 | apps.oauth-proxy.source.helm.params.clusterDomain | string | `"{{ .Values.clusterDomain }}"` |  |
 | apps.oauth-proxy.source.helm.params.clusterLocalAuth | string | `"{{ .Values.clusterLocalAuth }}"` |  |
 | apps.oauth-proxy.source.helm.params.clusterTLSInsecure | string | `"{{ .Values.clusterTLSInsecure }}"` |  |
+| apps.oauth-proxy.source.helm.params.oidcIssuerURL | string | `"{{ .Values.oidcIssuerURL }}"` |  |
+| apps.oauth-proxy.source.helm.params.oidcPermittedEmailDomains | string | `"{{ .Values.oidcPermittedEmailDomains }}"` |  |
 | apps.oauth-proxy.source.path | string | `"services/oauth-proxy"` |  |
 | apps.oauth-proxy.syncWave | string | `"5"` |  |
 | apps.opentelemetry-operator.destination.namespace | string | `"opentelemetry-operator"` |  |
@@ -109,16 +103,14 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | default.app.syncWave | string | `"10"` |  |
 | deployArgoProject | bool | `true` |  |
 | letsEncryptContactEmail | string | `nil` |  |
-| oauthProxySecret.clientID | string | `"{{ .Values.oidcClientID }}"` |  |
-| oauthProxySecret.clientSecret | string | `"{{ .Values.oidcClientSecret }}"` |  |
 | oauthProxySecret.cookieSecret | string | `nil` |  |
 | oauthProxySecret.createNamespace | bool | `true` |  |
 | oauthProxySecret.enable | bool | `true` |  |
 | oauthProxySecret.namespace | string | `"oauth-proxy"` |  |
 | oauthProxySecret.secretName | string | `"oauth-proxy-creds"` |  |
-| oidcClientID | string | `nil` |  |
-| oidcClientSecret | string | `nil` |  |
-| oidcIssuerURL | string | `nil` |  |
+| oidcClientID | string | `""` |  |
+| oidcClientSecret | string | `""` |  |
+| oidcIssuerURL | string | `""` |  |
 | oidcPermittedEmailDomains | string | `"*"` |  |
 
 ----------------------------------------------
