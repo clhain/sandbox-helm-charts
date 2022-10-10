@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo-argocd-notifications-controller
+  labels:
+    helm.sh/chart: argo-cd-5.5.7
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: foo
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-notifications-controller
+      app.kubernetes.io/instance: foo
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: argo-cd-5.5.7
+        app.kubernetes.io/name: argocd-notifications-controller
+        app.kubernetes.io/instance: foo
+        app.kubernetes.io/component: notifications-controller
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+    spec:
+      serviceAccountName: argocd-notifications-controller
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: notifications-controller
+          image: quay.io/argoproj/argocd:v2.4.12
+          imagePullPolicy: IfNotPresent
+          resources:
+            {}
+          command:
+            - argocd-notifications
+            - --loglevel=info
+            - --logformat=text
+            - --namespace=default
+            - --argocd-repo-server=foo-argocd-repo-server:8081
+          workingDir: /app
+          ports:
+          volumeMounts:
+            - name: tls-certs
+              mountPath: /app/config/tls
+            - name: argocd-repo-server-tls
+              mountPath: /app/config/reposerver/tls
+      volumes:
+        - configMap:
+            name: argocd-tls-certs-cm
+          name: tls-certs
+        - name: argocd-repo-server-tls
+          secret:
+            items:
+            - key: tls.crt
+              path: tls.crt
+            - key: tls.key
+              path: tls.key
+            - key: ca.crt
+              path: ca.crt
+            optional: true
+            secretName: argocd-repo-server-tls
+---
