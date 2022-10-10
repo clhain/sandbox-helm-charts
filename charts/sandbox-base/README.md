@@ -33,7 +33,7 @@ Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbo
 | argoOuathSecret.secretName | string | `"oauth-secret"` |  |
 | clusterDomain | string | `""` |  |
 | clusterIngressIP | string | `""` |  |
-| letsEncryptContactEmail | string | `nil` |  |
+| letsEncryptContactEmail | string | `""` |  |
 | oidcClientID | string | `""` |  |
 | oidcClientSecret | string | `""` |  |
 | oidcIssuerURL | string | `""` |  |
