@@ -31,12 +31,12 @@ Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbo
 | argoOuathSecret.clientSecret | string | `"{{ .Values.oidcClientSecret }}"` |  |
 | argoOuathSecret.enable | bool | `true` |  |
 | argoOuathSecret.secretName | string | `"oauth-secret"` |  |
-| clusterDomain | string | `nil` |  |
-| clusterIngressIP | string | `nil` |  |
+| clusterDomain | string | `""` |  |
+| clusterIngressIP | string | `""` |  |
 | letsEncryptContactEmail | string | `nil` |  |
-| oidcClientID | string | `nil` |  |
-| oidcClientSecret | string | `nil` |  |
-| oidcIssuerURL | string | `nil` |  |
+| oidcClientID | string | `""` |  |
+| oidcClientSecret | string | `""` |  |
+| oidcIssuerURL | string | `""` |  |
 | oidcPermittedEmailDomains | string | `"*"` |  |
 | paramOverrides."default.app.source.targetRevision" | string | `"{{ .Values.appsSourceTargetRevision }}"` |  |
 | paramOverrides.clusterDomain | string | `"{{ .Values.clusterDomain }}"` |  |
