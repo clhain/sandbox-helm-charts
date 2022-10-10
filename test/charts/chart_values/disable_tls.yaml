@@ -1,0 +1,8 @@
+clusterIngressIP: 1.1.1.1
+clusterDomain: example.com
+clusterTLSInsecure: true
+clusterLocalAuth: true
+letsEncryptContactEmail: "nobody@example.com"
+oidcClientID: "test"
+oidcClientSecret: "test"
+oidcIssuerURL: "https://dex.example.com/dex"

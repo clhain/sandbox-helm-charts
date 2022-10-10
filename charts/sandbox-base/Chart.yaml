@@ -9,5 +9,5 @@ maintainers:
   name: clhain
 name: sandbox-base
 type: application
-version: 0.0.4
+version: 0.0.5
 description: "Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbox-Apps chart."

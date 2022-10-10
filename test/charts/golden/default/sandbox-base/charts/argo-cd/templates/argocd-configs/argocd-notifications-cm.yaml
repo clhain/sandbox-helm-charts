@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  labels:
+    helm.sh/chart: argo-cd-5.5.7
+    app.kubernetes.io/name: argocd-notifications-controller
+    app.kubernetes.io/instance: foo
+    app.kubernetes.io/component: notifications-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+data:
+  context: |
+    argocdUrl:
+---
