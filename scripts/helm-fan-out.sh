@@ -16,10 +16,8 @@ awk -vout="$1" -F": " '
            system ("mkdir -p $(dirname "file"); echo -n "" > "file);
        }
    }
-   $0!~/^#/ {
-       if (file) {
-            $0!~/helm\.sh\/chart/{
-                print $0 >> file;
-            }
-       }
-   }'
+   $0!~/helm\.sh\/chart/ {
+        if (file) {
+            print $0 >> file;
+        }
+    }'
