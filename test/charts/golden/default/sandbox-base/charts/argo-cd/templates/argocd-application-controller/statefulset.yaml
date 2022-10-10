@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: foo-argocd-application-controller
   labels:
-    helm.sh/chart: argo-cd-5.5.7
+    helm.sh/chart: argo-cd-5.5.16
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/instance: foo
     app.kubernetes.io/component: application-controller
@@ -20,9 +20,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 7f9574a455ce0d2de273b3f27f195eb56336278d3d208243ab5753211456ae9d
+        checksum/cmd-params: 50a9d14d8d54b4784585f97f250c506d6f611d41a4b981b6dbb942d3ed796c5e
       labels:
-        helm.sh/chart: argo-cd-5.5.7
+        helm.sh/chart: argo-cd-5.5.16
         app.kubernetes.io/name: argocd-application-controller
         app.kubernetes.io/instance: foo
         app.kubernetes.io/component: application-controller
@@ -32,7 +32,7 @@ spec:
       containers:
       - command:
         - argocd-application-controller
-        image: quay.io/argoproj/argocd:v2.4.12
+        image: quay.io/argoproj/argocd:v2.4.14
         imagePullPolicy: IfNotPresent
         name: application-controller
         env:
