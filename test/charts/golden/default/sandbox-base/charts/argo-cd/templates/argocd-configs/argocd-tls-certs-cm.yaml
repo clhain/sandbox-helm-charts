@@ -1,9 +1,9 @@
+# Source: sandbox-base/charts/argo-cd/templates/argocd-configs/argocd-tls-certs-cm.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: argocd-tls-certs-cm
   labels:
-    helm.sh/chart: argo-cd-5.5.16
     app.kubernetes.io/name: argocd-tls-certs-cm
     app.kubernetes.io/instance: foo
     app.kubernetes.io/component: server

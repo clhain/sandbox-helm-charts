@@ -1,9 +1,9 @@
+# Source: sandbox-base/charts/argo-cd/templates/redis/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: foo-argocd-redis
   labels:
-    helm.sh/chart: argo-cd-5.5.16
     app.kubernetes.io/name: argocd-redis
     app.kubernetes.io/instance: foo
     app.kubernetes.io/component: redis
@@ -16,7 +16,6 @@ spec:
   template:
     metadata:
       labels:
-        helm.sh/chart: argo-cd-5.5.16
         app.kubernetes.io/name: argocd-redis
         app.kubernetes.io/instance: foo
         app.kubernetes.io/component: redis

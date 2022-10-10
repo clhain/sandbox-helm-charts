@@ -1,4 +1,3 @@
--n
 # Source: sandbox-base/templates/argocd-cm.yaml
 apiVersion: v1
 kind: ConfigMap
