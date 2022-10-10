@@ -1,4 +1,4 @@
-{{- $secretObj := (lookup "v1" "Secret" .Release.Namespace .Values.argoOuathSecret.secretName ) | default dict }}
+{{- $secretObj := (lookup "v1" "Secret" .Release.Namespace .Values.argoOuathSecret.secretName) | default dict }}
 {{- $secretData := (get $secretObj "data") | default dict }}
 {{- $clientSecret := (get $secretData "oidc.clientSecret") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
 {{- $clientId := (get $secretData "oidc.clientId") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
