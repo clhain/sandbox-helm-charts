@@ -1,9 +1,9 @@
+# Source: sandbox-base/charts/argo-cd/templates/argocd-configs/argocd-cmd-params-cm.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: argocd-cmd-params-cm
   labels:
-    helm.sh/chart: argo-cd-5.5.16
     app.kubernetes.io/name: argocd-cmd-params-cm
     app.kubernetes.io/instance: foo
     app.kubernetes.io/component: server

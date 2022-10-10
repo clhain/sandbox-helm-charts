@@ -1,3 +1,15 @@
+# Source: sandbox-base/templates/sandbox-apps.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: oauth-secret
+  labels:
+    app.kubernetes.io/part-of: argocd
+stringData:
+  oidc.clientId: "test"
+  oidc.clientSecret: "test"
+---
+# Source: sandbox-base/templates/sandbox-apps.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -17,18 +29,22 @@ spec:
           value: "example.com"
         - name: clusterIngressIP
           value: "1.1.1.1"
-        - name: default.app.source.targetRevision
-          value: "HEAD"
-        - name: letsEncryptContactEmail
-          value: "nobody@example.com"
+        - name: clusterTLSInsecure
+          value: "false"
+        - name: clusterLocalAuth
+          value: "true"
         - name: oidcClientID
           value: "test"
         - name: oidcClientSecret
           value: "test"
-        - name: oidcIssuerURL
-          value: "https://dex.example.com/dex"
         - name: oidcPermittedEmailDomains
           value: "*"
+        - name: oidcIssuerURL
+          value: "https://dex.example.com/dex"
+        - name: letsEncryptContactEmail
+          value: "nobody@example.com"
+        - name: default.app.source.targetRevision
+          value: "HEAD"
   syncPolicy:
     automated:
       prune: true

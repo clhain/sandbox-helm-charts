@@ -1,9 +1,9 @@
+# Source: sandbox-base/charts/argo-cd/templates/argocd-application-controller/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: foo-argocd-application-controller
   labels:
-    helm.sh/chart: argo-cd-5.5.16
     app.kubernetes.io/name: argocd-application-controller
     app.kubernetes.io/instance: foo
     app.kubernetes.io/component: application-controller

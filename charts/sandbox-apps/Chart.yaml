@@ -1,7 +1,7 @@
 apiVersion: v2
 name: sandbox-apps
 type: application
-version: 0.0.4
+version: 0.0.5
 appVersion: "1.0"
 description: "Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial configuration."
 maintainers:
