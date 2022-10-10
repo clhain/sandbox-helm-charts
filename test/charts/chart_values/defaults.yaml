@@ -3,3 +3,6 @@ clusterDomain: example.com
 clusterTLSInsecure: false
 clusterLocalAuth: true
 letsEncryptContactEmail: "nobody@example.com"
+oidcClientID: "test"
+oidcClientSecret: "test"
+oidcIssuerURL: "https://dex.example.com/dex"
