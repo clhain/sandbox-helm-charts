@@ -18,6 +18,8 @@ awk -vout="$1" -F": " '
    }
    $0!~/^#/ {
        if (file) {
-           print $0 >> file;
+            $0!~/helm\.sh\/chart/{
+                print $0 >> file;
+            }
        }
    }'
