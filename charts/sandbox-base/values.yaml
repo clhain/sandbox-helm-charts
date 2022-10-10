@@ -8,15 +8,15 @@ appsHelmSourceTargetRevision: HEAD
 appsSourceTargetRevision: HEAD
 
 # clusterDomain is the domain under which all resources are deployed. e.g. example.com
-clusterDomain:
+clusterDomain: ""
 # clusterIngressIP is the IP address which is to be assigned to the nginx ingress controller.
-clusterIngressIP:
+clusterIngressIP: ""
 # oidcClientID is the OIDC Client's ID to be used with oauth2 proxy.
-oidcClientID:
+oidcClientID: ""
 # oidcClientSecret is the OIDC Client's Secret to be used with oauth2 proxy.
-oidcClientSecret:
+oidcClientSecret: ""
 # oidcIssuerURL is the OIDC Issuer URL to be used with oauth2 proxy.
-oidcIssuerURL:
+oidcIssuerURL: ""
 # oidcPermittedEmailDomains is the set of email domains allowed to access resources behind the oauth2 proxy.
 oidcPermittedEmailDomains: "*"
 # letsEncryptContactEmail is the email address to use when registering let's encrypt certs.
