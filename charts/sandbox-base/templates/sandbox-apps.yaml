@@ -1,7 +1,7 @@
-{{- $secretObj := (lookup "v1" "Secret" .Values.oauthProxySecret.namespace .Values.oauthProxySecret.secretName) | default dict }}
+{{- $secretObj := (lookup "v1" "Secret" .Release.Namespace .Values..Values.argoOuathSecret.secretName ) | default dict }}
 {{- $secretData := (get $secretObj "data") | default dict }}
-{{- $clientSecret := (get $secretData "client-secret") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
-{{- $clientId := (get $secretData "client-id") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
+{{- $clientSecret := (get $secretData "oidc.clientSecret") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
+{{- $clientId := (get $secretData "oidc.clientId") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
 
 {{- if .Values.argoOuathSecret.enable }}
 ---
@@ -47,7 +47,7 @@ spec:
         - name: oidcPermittedEmailDomains
           value: "{{ .Values.oidcPermittedEmailDomains }}"
         - name: oidcIssuerURL
-          value: "{{ .Values.oidcIssuerURL }}"
+          value: "{{ if .Values.oidcIssuerURL }}{{ .Values.oidcIssuerURL }}{{ else }}{{ if .Values.clusterTLSInsecure }}http://{{ else }}https://{{ end }}dex.{{.Values.clusterDomain}}/dex{{ end }}"
         - name: letsEncryptContactEmail
           value: "{{ .Values.letsEncryptContactEmail }}"
         {{- if .Values.paramOverrides }}
