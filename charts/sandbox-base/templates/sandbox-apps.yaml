@@ -1,19 +1,23 @@
-{{- $secretObj := (lookup "v1" "Secret" .Release.Namespace .Values.argoOuathSecret.secretName) | default dict }}
+{{- $secretObj := (lookup "v1" "Secret" .Release.Namespace .Values.ouathSecret.secretName) | default dict }}
 {{- $secretData := (get $secretObj "data") | default dict }}
 {{- $clientSecret := (get $secretData "oidc.clientSecret") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
 {{- $clientId := (get $secretData "oidc.clientId") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
+{{- $clientId := (get $secretData "client-id") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
+{{- $adminPass := (get $secretData "admin-password") | default (randAlphaNum 32 | b64enc | substr 0 32) }}
 
-{{- if .Values.argoOuathSecret.enable }}
+{{- if .Values.ouathSecret.enable }}
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Values.argoOuathSecret.secretName | required (printf "No argoOuathSecret.secretName specified") }}
+  name: {{ .Values.ouathSecret.secretName | required (printf "No ouathSecret.secretName specified") }}
   labels:
     app.kubernetes.io/part-of: argocd
 stringData:
   oidc.clientId: "{{ if .Values.oidcClientID }}{{ .Values.oidcClientID }}{{ else }}{{ $clientId | b64dec }}{{ end }}"
   oidc.clientSecret: "{{ if .Values.oidcClientSecret }}{{ .Values.oidcClientSecret }}{{ else }}{{ $clientSecret | b64dec }}{{ end }}"
+  cookie-secret: "{{ if .Values.cookieSecret }}{{ .Values.cookieSecret }}{{ else }}{{ $cookieSecret | b64dec }}{{ end }}"
+  admin-password: "{{ if .Values.adminPass }}{{ .Values.adminPass }}{{ else }}{{ $adminPass | b64dec }}{{ end }}"
 {{- end }}
 
 ---
@@ -40,10 +44,6 @@ spec:
           value: "{{ .Values.clusterTLSInsecure }}"
         - name: clusterLocalAuth
           value: "{{ .Values.clusterLocalAuth }}"
-        - name: oidcClientID
-          value: "{{ if .Values.oidcClientID }}{{ .Values.oidcClientID }}{{ else }}{{ $clientId | b64dec }}{{ end }}"
-        - name: oidcClientSecret
-          value: "{{ if .Values.oidcClientSecret }}{{ .Values.oidcClientSecret }}{{ else }}{{ $clientSecret | b64dec }}{{ end }}"
         - name: oidcPermittedEmailDomains
           value: "{{ .Values.oidcPermittedEmailDomains }}"
         - name: oidcIssuerURL
