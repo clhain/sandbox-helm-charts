@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo-argocd-redis
+  labels:
+    helm.sh/chart: argo-cd-5.5.7
+    app.kubernetes.io/name: argocd-redis
+    app.kubernetes.io/instance: foo
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: argocd
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-redis
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: argo-cd-5.5.7
+        app.kubernetes.io/name: argocd-redis
+        app.kubernetes.io/instance: foo
+        app.kubernetes.io/component: redis
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: argocd
+    spec:
+      automountServiceAccountToken: false
+      serviceAccountName: default
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      containers:
+      - name: foo-argocd-redis
+        args:
+        - --save
+        - ""
+        - --appendonly
+        - "no"
+        image: public.ecr.aws/docker/library/redis:7.0.4-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6379
+          name: redis
+        resources:
+          {}
+---

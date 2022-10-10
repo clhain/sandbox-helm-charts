@@ -1,0 +1,10 @@
+diff -bur test/charts/golden/default/sandbox-apps/templates/oauth-proxy-secret.yaml test/charts/golden/disable_local_auth/sandbox-apps/templates/oauth-proxy-secret.yaml
+--- test/charts/golden/default/sandbox-apps/templates/oauth-proxy-secret.yaml	2022-10-10 15:43:04.981407322 +0000
++++ test/charts/golden/disable_local_auth/sandbox-apps/templates/oauth-proxy-secret.yaml	2022-10-10 15:43:05.377405019 +0000
+@@ -13,5 +13,5 @@
+ stringData:
+   client-id: "test"
+   client-secret: "test"
+-  cookie-secret: "LqWZggbpGRVU7zeIdxXEVY1r"
++  cookie-secret: "KrjVtKxtar1SDh19ogNzshPY"
+ ---
