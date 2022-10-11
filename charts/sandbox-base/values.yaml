@@ -25,16 +25,17 @@ oidcClientSecret: ""
 oidcIssuerURL: ""
 # oidcPermittedEmailDomains is the set of email domains allowed to access resources behind the oauth2 proxy.
 oidcPermittedEmailDomains: "*"
+# Admin Pass overrides the default admin account for use with local dex authenticator
+adminPass: ""
+# Cookie Secret to use with Oauth2 Proxy
+cookieSecret: ""
 
 # letsEncryptContactEmail is the email address to use when registering let's encrypt certs.
 letsEncryptContactEmail: ""
 
-# Whether to deploy a secret value containing Oauth Client secret settings.
-ouathSecret:
-  # Enable the secret resource.
-  enable: true
-  # The name of the Oauth2 secret resource to deploy.
-  secretName: oauth-secret
+# Deploy auth secrets for oauthProxy
+authSecretEnable: true
+authSecretName: oauth-secret
 
 # Parameter overrides to pass to the sandbox-apps helm chart.
 paramOverrides:
