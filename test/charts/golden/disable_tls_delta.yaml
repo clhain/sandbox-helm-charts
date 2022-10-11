@@ -1,6 +1,6 @@
 diff -bur test/charts/golden/default/sandbox-apps/templates/application.yaml test/charts/golden/disable_tls/sandbox-apps/templates/application.yaml
---- test/charts/golden/default/sandbox-apps/templates/application.yaml	2022-10-11 03:09:35.125167840 +0000
-+++ test/charts/golden/disable_tls/sandbox-apps/templates/application.yaml	2022-10-11 03:09:35.925201643 +0000
+--- test/charts/golden/default/sandbox-apps/templates/application.yaml	2022-10-11 05:44:08.044003845 +0000
++++ test/charts/golden/disable_tls/sandbox-apps/templates/application.yaml	2022-10-11 05:44:08.816006516 +0000
 @@ -25,7 +25,7 @@
        - name: clusterDomain
          value: "example.com"
@@ -38,16 +38,16 @@ diff -bur test/charts/golden/default/sandbox-apps/templates/application.yaml tes
          value: "https://dex.example.com/dex"
        - name: oidcPermittedEmailDomains
 diff -bur test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml test/charts/golden/disable_tls/sandbox-apps/templates/auth-secrets.yaml
---- test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml	2022-10-11 03:09:35.117167502 +0000
-+++ test/charts/golden/disable_tls/sandbox-apps/templates/auth-secrets.yaml	2022-10-11 03:09:35.921201474 +0000
+--- test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml	2022-10-11 05:44:08.040003829 +0000
++++ test/charts/golden/disable_tls/sandbox-apps/templates/auth-secrets.yaml	2022-10-11 05:44:08.808006491 +0000
 @@ -15,8 +15,8 @@
  stringData:
    client-id: "test"
    client-secret: "test"
--  cookie-secret: "k08vVUYA6nMNd6Q2VJ1sLzrO"
--  admin-password: "J02706Tw59LSoB65PPAU1UDX"
-+  cookie-secret: "aqhcv0ysgxI7N7OEVD6UItcl"
-+  admin-password: "rn8epIaNHsC9SgVGSDWyZ67M"
+-  cookie-secret: "A2crZrqgS92x0KWK9Kr7D35C"
+-  admin-password: "JkKKRSxSvn8Dmd0RE2aRKYYD"
++  cookie-secret: "u2THfmf0ofsa7mKNBFoPtEZG"
++  admin-password: "ONU0xVjvzEoqqmciU2pBAJPZ"
  ---
  # Source: sandbox-apps/templates/auth-secrets.yaml
  apiVersion: v1
@@ -73,16 +73,16 @@ diff -bur test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml te
      enablePasswordDB: true
      staticPasswords:
      - email: "admin@example.com"
--      hash: "$2a$10$UyEES.S9/aV30ErriidymuOtzJuW4uU/BXbVOaDjmmbDqzE/Y/6ne"
-+      hash: "$2a$10$WiFchZ8TAbr/7QalRCK50eF8qXO5CBSl7KBctcrN0pfsUvGFsshD."
+-      hash: "$2a$10$nSDLHDS2qpcQ.OVbQwAQuOiLyh/cUJEuXpDVPrHUqVv4dMRJYiEru"
++      hash: "$2a$10$ib11jJJFczzL7pyg5kv70efp3sk1kJaJgidcDwYvDde.Evr3m7mXW"
        username: "admin"
        userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
      logger:
 Only in test/charts/golden/default/sandbox-apps/templates: oauth-proxy-secret.yaml
 Only in test/charts/golden/default/sandbox-base/charts/argo-cd/templates/argocd-configs: argocd-cm.yaml
 diff -bur test/charts/golden/default/sandbox-base/templates/argocd-cm.yaml test/charts/golden/disable_tls/sandbox-base/templates/argocd-cm.yaml
---- test/charts/golden/default/sandbox-base/templates/argocd-cm.yaml	2022-10-11 03:09:34.853156347 +0000
-+++ test/charts/golden/disable_tls/sandbox-base/templates/argocd-cm.yaml	2022-10-11 03:09:35.661190488 +0000
+--- test/charts/golden/default/sandbox-base/templates/argocd-cm.yaml	2022-10-11 05:44:07.784002790 +0000
++++ test/charts/golden/disable_tls/sandbox-base/templates/argocd-cm.yaml	2022-10-11 05:44:08.568005735 +0000
 @@ -39,5 +39,5 @@
      end
      return hs
@@ -92,16 +92,16 @@ diff -bur test/charts/golden/default/sandbox-base/templates/argocd-cm.yaml test/
  ---
 Only in test/charts/golden/default/sandbox-base/templates: argocd-oauth-secret.yaml
 diff -bur test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml test/charts/golden/disable_tls/sandbox-base/templates/sandbox-apps.yaml
---- test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml	2022-10-11 03:09:34.953160572 +0000
-+++ test/charts/golden/disable_tls/sandbox-base/templates/sandbox-apps.yaml	2022-10-11 03:09:35.757194544 +0000
+--- test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml	2022-10-11 05:44:07.880003180 +0000
++++ test/charts/golden/disable_tls/sandbox-base/templates/sandbox-apps.yaml	2022-10-11 05:44:08.660006025 +0000
 @@ -8,8 +8,8 @@
  stringData:
    oidc.clientId: "test"
    oidc.clientSecret: "test"
--  cookie-secret: "ejXVUpLJ0HK9SyATQrS8XLYV"
--  admin-password: "KS7I85NQPdq4nmlaoXIZfsz5"
-+  cookie-secret: "rvkwljmEMFU0aILHLHOVQE6m"
-+  admin-password: "o7zprOBNFBveCIWaIAWguQUL"
+-  cookie-secret: "wrT3cgrWxSk7ks0jUF0rmLV7"
+-  admin-password: "BDVDcwroQXsk5EBjbmuaFMUx"
++  cookie-secret: "KbVfTmJPN5lbO0t3cTb84dcD"
++  admin-password: "npFmJENkTgKJ8nvaSlIdFVDA"
  ---
  # Source: sandbox-base/templates/sandbox-apps.yaml
  apiVersion: argoproj.io/v1alpha1
@@ -114,11 +114,11 @@ diff -bur test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml te
          - name: clusterLocalAuth
            value: "true"
          - name: cookieSecret
--          value: "ejXVUpLJ0HK9SyATQrS8XLYV"
-+          value: "rvkwljmEMFU0aILHLHOVQE6m"
+-          value: "wrT3cgrWxSk7ks0jUF0rmLV7"
++          value: "KbVfTmJPN5lbO0t3cTb84dcD"
          - name: adminPass
--          value: "KS7I85NQPdq4nmlaoXIZfsz5"
-+          value: "o7zprOBNFBveCIWaIAWguQUL"
+-          value: "BDVDcwroQXsk5EBjbmuaFMUx"
++          value: "npFmJENkTgKJ8nvaSlIdFVDA"
          - name: oidcClientID
            value: "test"
          - name: oidcClientSecret
