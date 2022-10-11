@@ -3,6 +3,19 @@ entries:
   sandbox-apps:
   - apiVersion: v2
     appVersion: "1.0"
+    created: "2022-10-11T03:17:15.028230843Z"
+    description: Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial configuration.
+    digest: 5173cecb65b48a0b2d6aea124a702a413c9763eefd0f4ad6a05925a87e2e4a95
+    maintainers:
+    - email: clhain@gmail.com
+      name: clhain
+    name: sandbox-apps
+    type: application
+    urls:
+    - https://github.com/clhain/sandbox-helm-charts/releases/download/sandbox-apps-0.0.7/sandbox-apps-0.0.7.tgz
+    version: 0.0.7
+  - apiVersion: v2
+    appVersion: "1.0"
     created: "2022-10-10T22:31:52.075626253Z"
     description: Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial configuration.
     digest: a70efc045b077e370f50c791b0198af144832534d980c1b32a5d850b2959b8ba
@@ -72,6 +85,23 @@ entries:
     - https://github.com/clhain/sandbox-helm-charts/releases/download/sandbox-apps-0.0.1/sandbox-apps-0.0.1.tgz
     version: 0.0.1
   sandbox-base:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2022-10-11T03:17:15.206130897Z"
+    dependencies:
+    - name: argo-cd
+      repository: https://argoproj.github.io/argo-helm
+      version: 5.5.16
+    description: Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbox-Apps chart.
+    digest: b23a86b06a6ae032d2ce95a566ec92fb3ca725d814fb3507c2ccb2bc78962484
+    maintainers:
+    - email: clhain@gmail.com
+      name: clhain
+    name: sandbox-base
+    type: application
+    urls:
+    - https://github.com/clhain/sandbox-helm-charts/releases/download/sandbox-base-0.0.9/sandbox-base-0.0.9.tgz
+    version: 0.0.9
   - apiVersion: v2
     appVersion: "1.0"
     created: "2022-10-10T22:31:52.357227241Z"
