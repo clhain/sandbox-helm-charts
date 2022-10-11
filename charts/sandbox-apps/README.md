@@ -1,6 +1,6 @@
 # sandbox-apps
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
 
 Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial configuration.
 
@@ -14,6 +14,7 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| adminPass | string | `""` |  |
 | apps.argo-virtual-server.destination.namespace | string | `"argocd"` |  |
 | apps.argo-virtual-server.enabled | bool | `true` |  |
 | apps.argo-virtual-server.source.helm.params.clusterDomain | string | `"{{ .Values.clusterDomain }}"` |  |
@@ -85,10 +86,13 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.tempo.enabled | bool | `true` |  |
 | apps.tempo.source.path | string | `"services/tempo"` |  |
 | apps.tempo.syncWave | string | `"5"` |  |
+| authSecretName | string | `"oauth-secret"` |  |
+| authSecretNamespace | string | `"argocd"` |  |
 | clusterDomain | string | `nil` |  |
 | clusterIngressIP | string | `nil` |  |
 | clusterLocalAuth | bool | `true` |  |
 | clusterTLSInsecure | bool | `false` |  |
+| cookieSecret | string | `""` |  |
 | default.app.autoSyncPrune | bool | `true` |  |
 | default.app.destination.namespace | string | `nil` |  |
 | default.app.destination.server | string | `"https://kubernetes.default.svc"` |  |
@@ -102,12 +106,10 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | default.app.syncOptions[0] | string | `"CreateNamespace=true"` |  |
 | default.app.syncWave | string | `"10"` |  |
 | deployArgoProject | bool | `true` |  |
+| enableVirtualServer | bool | `true` |  |
 | letsEncryptContactEmail | string | `nil` |  |
-| oauthProxySecret.cookieSecret | string | `nil` |  |
-| oauthProxySecret.createNamespace | bool | `true` |  |
-| oauthProxySecret.enable | bool | `true` |  |
-| oauthProxySecret.namespace | string | `"oauth-proxy"` |  |
-| oauthProxySecret.secretName | string | `"oauth-proxy-creds"` |  |
+| oauthProxyNamespace | string | `"oauth-proxy"` |  |
+| oauthProxySecretEnable | bool | `true` |  |
 | oidcClientID | string | `""` |  |
 | oidcClientSecret | string | `""` |  |
 | oidcIssuerURL | string | `""` |  |
