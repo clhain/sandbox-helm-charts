@@ -14,7 +14,7 @@ data:
   application.instanceLabelKey: argocd.argoproj.io/instance
   exec.enabled: "false"
   oidc.config: |
-    name: Federated Login
+    name: OIDC
     issuer: "https://dex.example.com/dex"
     clientID: $oauth-secret:oidc.clientId
     clientSecret: $oauth-secret:oidc.clientSecret

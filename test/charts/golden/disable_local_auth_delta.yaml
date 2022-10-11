@@ -1,6 +1,6 @@
 diff -bur test/charts/golden/default/sandbox-apps/templates/application.yaml test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml
---- test/charts/golden/default/sandbox-apps/templates/application.yaml	2022-10-10 22:23:25.224009290 +0000
-+++ test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml	2022-10-10 22:23:25.556012820 +0000
+--- test/charts/golden/default/sandbox-apps/templates/application.yaml	2022-10-11 03:09:35.125167840 +0000
++++ test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml	2022-10-11 03:09:35.477182713 +0000
 @@ -245,7 +245,7 @@
        - name: clusterDomain
          value: "example.com"
@@ -10,30 +10,87 @@ diff -bur test/charts/golden/default/sandbox-apps/templates/application.yaml tes
        - name: clusterTLSInsecure
          value: "false"
        - name: oidcIssuerURL
-Only in test/charts/golden/default/sandbox-apps/templates: auth-secrets.yaml
+diff -bur test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml test/charts/golden/disable_local_auth/sandbox-apps/templates/auth-secrets.yaml
+--- test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml	2022-10-11 03:09:35.117167502 +0000
++++ test/charts/golden/disable_local_auth/sandbox-apps/templates/auth-secrets.yaml	2022-10-11 03:09:35.473182544 +0000
+@@ -15,46 +15,6 @@
+ stringData:
+   client-id: "test"
+   client-secret: "test"
+-  cookie-secret: "k08vVUYA6nMNd6Q2VJ1sLzrO"
+-  admin-password: "J02706Tw59LSoB65PPAU1UDX"
+----
+-# Source: sandbox-apps/templates/auth-secrets.yaml
+-apiVersion: v1
+-kind: Secret
+-metadata:
+-  name: dex-config-secret
+-  namespace: oauth-proxy
+-stringData:
+-  config.yaml: |
+-    issuer: https://dex.example.com/dex
+-    storage:
+-      type: kubernetes
+-      config:
+-        inCluster: true
+-    web:
+-      http: 0.0.0.0:5556
+-      allowedOrigins: ['*']
+-    connectors:
+-    - type: mockCallback
+-      id: mock
+-      name: Example
+-
+-    oauth2:
+-      skipApprovalScreen: false
+-      alwaysShowLoginScreen: true
+-    staticClients:
+-    - id: test
+-      redirectURIs:
+-      - 'https://auth.example.com/oauth2/callback'
+-      - 'https://argocd.example.com/auth/callback'
+-      name: 'OAuth2 Proxy'
+-      secret: "test"
+-    enablePasswordDB: true
+-    staticPasswords:
+-    - email: "admin@example.com"
+-      hash: "$2a$10$UyEES.S9/aV30ErriidymuOtzJuW4uU/BXbVOaDjmmbDqzE/Y/6ne"
+-      username: "admin"
+-      userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+-    logger:
+-      level: debug
++  cookie-secret: "gQXfnnvwbzYR4g502p2F1q3K"
++  admin-password: "U39uWn8wLcDowMBiR81snArp"
+ ---
 Only in test/charts/golden/default/sandbox-apps/templates: oauth-proxy-secret.yaml
 Only in test/charts/golden/default/sandbox-base/charts/argo-cd/templates/argocd-configs: argocd-cm.yaml
 Only in test/charts/golden/default/sandbox-base/templates: argocd-oauth-secret.yaml
 diff -bur test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml
---- test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml	2022-10-10 22:23:25.168008694 +0000
-+++ test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml	2022-10-10 22:23:25.500012225 +0000
+--- test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml	2022-10-11 03:09:34.953160572 +0000
++++ test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml	2022-10-11 03:09:35.397179333 +0000
 @@ -8,8 +8,8 @@
  stringData:
    oidc.clientId: "test"
    oidc.clientSecret: "test"
--  cookie-secret: "FeLLFXQP0Ay2fhbqwzg2bOtd"
--  admin-password: "e8fNk4SsPxA1XqbY9bIMZ1PH"
-+  cookie-secret: "eR6npqIuJGE0as2ODtPl9YXj"
-+  admin-password: "wX9W010bRR0hqCvpBzG682pW"
+-  cookie-secret: "ejXVUpLJ0HK9SyATQrS8XLYV"
+-  admin-password: "KS7I85NQPdq4nmlaoXIZfsz5"
++  cookie-secret: "gz9tcpICyHgEP7rH11SrrFIN"
++  admin-password: "m7pr0dRoJ8laGicslu8zizVd"
  ---
  # Source: sandbox-base/templates/sandbox-apps.yaml
  apiVersion: argoproj.io/v1alpha1
-@@ -34,7 +34,7 @@
+@@ -34,11 +34,11 @@
          - name: clusterTLSInsecure
            value: "false"
          - name: clusterLocalAuth
 -          value: "true"
 +          value: "false"
-         - name: oidcPermittedEmailDomains
-           value: "*"
-         - name: oidcIssuerURL
+         - name: cookieSecret
+-          value: "ejXVUpLJ0HK9SyATQrS8XLYV"
++          value: "gz9tcpICyHgEP7rH11SrrFIN"
+         - name: adminPass
+-          value: "KS7I85NQPdq4nmlaoXIZfsz5"
++          value: "m7pr0dRoJ8laGicslu8zizVd"
+         - name: oidcClientID
+           value: "test"
+         - name: oidcClientSecret
