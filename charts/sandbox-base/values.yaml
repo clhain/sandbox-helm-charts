@@ -9,7 +9,7 @@ appsHelmSourceTargetRevision: HEAD
 appsSourceTargetRevision: HEAD
 
 # clusterDomain is the domain under which all resources are deployed. e.g. example.com
-clusterDomain: ""
+clusterDomain: "localtest.me"
 # clusterIngressIP is the IP address which is to be assigned to the nginx ingress controller.
 clusterIngressIP:
 # Disable all certificate generation and https auth callbacks (not recommended)

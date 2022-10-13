@@ -1,7 +1,7 @@
 # clusterIngressIP is the IP address which is to be assigned to the nginx ingress controller.
 clusterIngressIP:
 # clusterDomain is the domain under which all resources are deployed. e.g. example.com
-clusterDomain:
+clusterDomain: localtest.me
 # Disable all certificate generation and https auth callbacks (not recommended)
 clusterTLSInsecure: false
 # Enable a local Dex IDP with static admin account for oauth protected services.
