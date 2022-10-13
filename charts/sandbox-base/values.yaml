@@ -41,6 +41,7 @@ authSecretName: oauth-secret
 paramOverrides:
   default.app.source.targetRevision: "{{ .Values.appsSourceTargetRevision }}"
 
+deployArgoProject: true
 
 # Setting to pass to the public Argo CD Helm Charts
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
