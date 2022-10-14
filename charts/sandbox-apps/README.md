@@ -44,6 +44,7 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.nginx-ingress.destination.namespace | string | `"nginx-ingress"` |  |
 | apps.nginx-ingress.enabled | bool | `true` |  |
 | apps.nginx-ingress.source.helm.params."nginx-ingress.controller.service.annoations.cloud\.google\.com/load-balancer-type" | string | `"External"` |  |
+| apps.nginx-ingress.source.helm.params."nginx-ingress.controller.service.create" | string | `"{{ eq .Values.clusterIngressIP nil }}"` |  |
 | apps.nginx-ingress.source.helm.params."nginx-ingress.controller.service.loadBalancerIP" | string | `"{{ .Values.clusterIngressIP }}"` |  |
 | apps.nginx-ingress.source.path | string | `"services/nginx-ingress"` |  |
 | apps.nginx-ingress.syncWave | string | `"4"` |  |
@@ -88,7 +89,7 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.tempo.syncWave | string | `"5"` |  |
 | authSecretName | string | `"oauth-secret"` |  |
 | authSecretNamespace | string | `"argocd"` |  |
-| clusterDomain | string | `nil` |  |
+| clusterDomain | string | `"localtest.me"` |  |
 | clusterIngressIP | string | `nil` |  |
 | clusterLocalAuth | bool | `true` |  |
 | clusterTLSInsecure | bool | `false` |  |
