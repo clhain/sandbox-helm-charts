@@ -54,30 +54,3 @@ argo-cd:
     rbacConfig:
       policy.default: role:readonly
     configEnabled: false
-    # If configEnabled is re-enabled, these defaults are added.
-    config:
-      resource.customizations.health.argoproj.io_Application: |-
-        hs = {}
-        hs.status = "Progressing"
-        hs.message = ""
-        if obj.status ~= nil then
-          if obj.status.health ~= nil then
-            hs.status = obj.status.health.status
-            if obj.status.health.message ~= nil then
-              hs.message = obj.status.health.message
-            end
-          end
-        end
-        return hs
-      # oidc.config: |
-      #   name: AzureAD
-      #   issuer: {{ YOUR_OIDC_ISSUER_URL }}
-      #   clientID: $oauth-secret:oidc.clientId
-      #   clientSecret: $oauth-secret:oidc.clientSecret
-      #   requestedIDTokenClaims:
-      #     groups:
-      #       essential: true
-      #   requestedScopes:
-      #     - openid
-      #     - profile
-      #     - email
