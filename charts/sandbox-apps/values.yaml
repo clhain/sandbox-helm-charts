@@ -149,7 +149,7 @@ apps:
           nginx-ingress.controller.service.annoations.cloud\.google\.com/load-balancer-type: "External"
           # The IP of the loadbalancer to use.
           nginx-ingress.controller.service.loadBalancerIP: "{{ .Values.clusterIngressIP }}"
-          nginx-ingress.controller.service.create: "{{ not (eq .Values.clusterIngressIP "") }}"
+          nginx-ingress.controller.service.create: "{{ not (eq .Values.clusterIngressIP '') }}"
     syncWave: "4"
 
   # Parameters for the nginx-mesh ArgoCD Application.
