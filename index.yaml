@@ -3,6 +3,19 @@ entries:
   sandbox-apps:
   - apiVersion: v2
     appVersion: "1.0"
+    created: "2022-10-14T23:39:43.648543939Z"
+    description: Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial configuration.
+    digest: 022c7fc75052e5816e54c63627ce9b8d4322076169f8aeb8bd8719207f86a6bd
+    maintainers:
+    - email: clhain@gmail.com
+      name: clhain
+    name: sandbox-apps
+    type: application
+    urls:
+    - https://github.com/clhain/sandbox-helm-charts/releases/download/sandbox-apps-0.0.10/sandbox-apps-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v2
+    appVersion: "1.0"
     created: "2022-10-14T19:25:36.299840366Z"
     description: Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial configuration.
     digest: f10b3592678a9ad412893e229a574a6ba26203636d6c8f07d531ec39854ead3c
