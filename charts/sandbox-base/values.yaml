@@ -9,7 +9,7 @@ appsHelmSourceTargetRevision: HEAD
 appsSourceTargetRevision: HEAD
 
 # clusterDomain is the domain under which all resources are deployed. e.g. example.com
-clusterDomain: ""
+clusterDomain: "localtest.me"
 # clusterIngressIP is the IP address which is to be assigned to the nginx ingress controller.
 clusterIngressIP:
 # Disable all certificate generation and https auth callbacks (not recommended)
@@ -41,6 +41,7 @@ authSecretName: oauth-secret
 paramOverrides:
   default.app.source.targetRevision: "{{ .Values.appsSourceTargetRevision }}"
 
+deployArgoProject: true
 
 # Setting to pass to the public Argo CD Helm Charts
 # https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
@@ -53,30 +54,3 @@ argo-cd:
     rbacConfig:
       policy.default: role:readonly
     configEnabled: false
-    # If configEnabled is re-enabled, these defaults are added.
-    config:
-      resource.customizations.health.argoproj.io_Application: |-
-        hs = {}
-        hs.status = "Progressing"
-        hs.message = ""
-        if obj.status ~= nil then
-          if obj.status.health ~= nil then
-            hs.status = obj.status.health.status
-            if obj.status.health.message ~= nil then
-              hs.message = obj.status.health.message
-            end
-          end
-        end
-        return hs
-      # oidc.config: |
-      #   name: AzureAD
-      #   issuer: {{ YOUR_OIDC_ISSUER_URL }}
-      #   clientID: $oauth-secret:oidc.clientId
-      #   clientSecret: $oauth-secret:oidc.clientSecret
-      #   requestedIDTokenClaims:
-      #     groups:
-      #       essential: true
-      #   requestedScopes:
-      #     - openid
-      #     - profile
-      #     - email

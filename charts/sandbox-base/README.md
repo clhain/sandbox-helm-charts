@@ -1,6 +1,6 @@
 # sandbox-base
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
 
 Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbox-Apps chart.
 
@@ -26,16 +26,16 @@ Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbo
 | appsHelmSourceURL | string | `"https://github.com/clhain/sandbox-helm-charts.git"` |  |
 | appsSourceTargetRevision | string | `"HEAD"` |  |
 | argo-cd.crds.install | bool | `false` |  |
-| argo-cd.server.config."resource.customizations.health.argoproj.io_Application" | string | `"hs = {}\nhs.status = \"Progressing\"\nhs.message = \"\"\nif obj.status ~= nil then\n  if obj.status.health ~= nil then\n    hs.status = obj.status.health.status\n    if obj.status.health.message ~= nil then\n      hs.message = obj.status.health.message\n    end\n  end\nend\nreturn hs"` |  |
 | argo-cd.server.configEnabled | bool | `false` |  |
 | argo-cd.server.rbacConfig."policy.default" | string | `"role:readonly"` |  |
 | authSecretEnable | bool | `true` |  |
 | authSecretName | string | `"oauth-secret"` |  |
-| clusterDomain | string | `""` |  |
+| clusterDomain | string | `"localtest.me"` |  |
 | clusterIngressIP | string | `nil` |  |
 | clusterLocalAuth | bool | `true` |  |
 | clusterTLSInsecure | bool | `false` |  |
 | cookieSecret | string | `""` |  |
+| deployArgoProject | bool | `true` |  |
 | letsEncryptContactEmail | string | `""` |  |
 | oidcClientID | string | `""` |  |
 | oidcClientSecret | string | `""` |  |
