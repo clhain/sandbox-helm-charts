@@ -1,6 +1,6 @@
 diff -bur test/charts/golden/default/sandbox-apps/templates/application.yaml test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml
---- test/charts/golden/default/sandbox-apps/templates/application.yaml	2022-10-14 19:17:04.854434264 +0000
-+++ test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml	2022-10-14 19:17:05.162455203 +0000
+--- test/charts/golden/default/sandbox-apps/templates/application.yaml	2022-10-14 23:38:30.514378231 +0000
++++ test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml	2022-10-14 23:38:30.854379981 +0000
 @@ -247,7 +247,7 @@
        - name: clusterDomain
          value: "example.com"
@@ -11,14 +11,14 @@ diff -bur test/charts/golden/default/sandbox-apps/templates/application.yaml tes
          value: "false"
        - name: oidcIssuerURL
 diff -bur test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml test/charts/golden/disable_local_auth/sandbox-apps/templates/auth-secrets.yaml
---- test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml	2022-10-14 19:17:04.850433992 +0000
-+++ test/charts/golden/disable_local_auth/sandbox-apps/templates/auth-secrets.yaml	2022-10-14 19:17:05.158454931 +0000
+--- test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml	2022-10-14 23:38:30.506378190 +0000
++++ test/charts/golden/disable_local_auth/sandbox-apps/templates/auth-secrets.yaml	2022-10-14 23:38:30.846379939 +0000
 @@ -15,46 +15,6 @@
  stringData:
    client-id: "test"
    client-secret: "test"
--  cookie-secret: "B7S9kCe1RFBjx0V07oPkvfn4"
--  admin-password: "L2efDlUl2UpGnxrXFyKOp1wn"
+-  cookie-secret: "T3nwsLZJhGU8b2SmHJPgpAgf"
+-  admin-password: "cQfKOaOQH2M9GUTfxXvWEnbU"
 ----
 -# Source: sandbox-apps/templates/auth-secrets.yaml
 -apiVersion: v1
@@ -54,28 +54,28 @@ diff -bur test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml te
 -    enablePasswordDB: true
 -    staticPasswords:
 -    - email: "admin@example.com"
--      hash: "$2a$10$pFEpKS62yovIrz4Ry0EAz.B2YRJA/XQFDNzkqYA8kJIFUshYMxzBO"
+-      hash: "$2a$10$JsQC9C5ZJ2xdJ9HwItCQH.icT2gtwpXB8v4zvhGcw4Ir.8tuhAq/m"
 -      username: "admin"
 -      userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
 -    logger:
 -      level: debug
-+  cookie-secret: "vFF1DlYBGdFVA6JTelXTyIpK"
-+  admin-password: "59Yll27y16CEt3bm90vm04do"
++  cookie-secret: "LysYWQei868CavD6iwS5JeN7"
++  admin-password: "LrZCWANX1TnyyU5zWv49wYwM"
  ---
 Only in test/charts/golden/default/sandbox-apps/templates: oauth-proxy-secret.yaml
 Only in test/charts/golden/default/sandbox-base/charts/argo-cd/templates/argocd-configs: argocd-cm.yaml
 Only in test/charts/golden/default/sandbox-base/templates: argocd-oauth-secret.yaml
 diff -bur test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml
---- test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml	2022-10-14 19:17:04.706424203 +0000
-+++ test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml	2022-10-14 19:17:05.098450852 +0000
+--- test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml	2022-10-14 23:38:30.338377326 +0000
++++ test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml	2022-10-14 23:38:30.774379569 +0000
 @@ -8,8 +8,8 @@
  stringData:
    oidc.clientId: "test"
    oidc.clientSecret: "test"
--  cookie-secret: "Ua6WTHXoaZG8YPAdhV9DwtS4"
--  admin-password: "uOaFrwfK7U00krw23UvFtoqv"
-+  cookie-secret: "YXOSCHhNTTgjQlbzinjN24hD"
-+  admin-password: "3Je3AvCABjbW1oStBsl4lkG1"
+-  cookie-secret: "Vu1MvFyFHpNvS6c6Fkvmtzw8"
+-  admin-password: "Kplv4RxWZYBiZMFaKqMxxege"
++  cookie-secret: "aCbdHNIpjqrLAa32koNHwzpV"
++  admin-password: "R70XN1RegGIfSbSwrIohVdDQ"
  ---
  # Source: sandbox-base/templates/sandbox-apps.yaml
  apiVersion: argoproj.io/v1alpha1
@@ -86,11 +86,11 @@ diff -bur test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml te
 -          value: "true"
 +          value: "false"
          - name: cookieSecret
--          value: "Ua6WTHXoaZG8YPAdhV9DwtS4"
-+          value: "YXOSCHhNTTgjQlbzinjN24hD"
+-          value: "Vu1MvFyFHpNvS6c6Fkvmtzw8"
++          value: "aCbdHNIpjqrLAa32koNHwzpV"
          - name: adminPass
--          value: "uOaFrwfK7U00krw23UvFtoqv"
-+          value: "3Je3AvCABjbW1oStBsl4lkG1"
+-          value: "Kplv4RxWZYBiZMFaKqMxxege"
++          value: "R70XN1RegGIfSbSwrIohVdDQ"
          - name: oidcClientID
            value: "test"
          - name: oidcClientSecret
