@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 50a9d14d8d54b4784585f97f250c506d6f611d41a4b981b6dbb942d3ed796c5e
+        checksum/cmd-params: 70625c4d05f374ed7c6d75d645fb3124d1dd7fd9eb4b8eb4bad4bfb31db44a9c
       labels:
         app.kubernetes.io/name: argocd-dex-server
         app.kubernetes.io/instance: foo
@@ -27,10 +27,8 @@ spec:
     spec:
       initContainers:
       - name: copyutil
-        image: quay.io/argoproj/argocd:v2.4.14
+        image: quay.io/argoproj/argocd:v2.5.0
         imagePullPolicy: IfNotPresent
-        resources:
-          {}
         command:
         - cp
         - -n
@@ -41,9 +39,20 @@ spec:
           name: static-files
         - mountPath: /tmp
           name: dexconfig
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
       containers:
       - name: dex-server
-        image: ghcr.io/dexidp/dex:v2.35.1-distroless
+        image: ghcr.io/dexidp/dex:v2.35.3-distroless
         imagePullPolicy: IfNotPresent
         command:
         - /shared/argocd-dex
@@ -66,6 +75,17 @@ spec:
         - name: metrics
           containerPort: 5558
           protocol: TCP
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
         volumeMounts:
         - name: static-files
           mountPath: /shared
@@ -73,8 +93,6 @@ spec:
           mountPath: /tmp
         - name: argocd-dex-server-tls
           mountPath: /tls
-        resources:
-          {}
       serviceAccountName: argocd-dex-server
       volumes:
       - name: static-files

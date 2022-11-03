@@ -28,18 +28,31 @@ spec:
       serviceAccountName: argocd-notifications-controller
       containers:
         - name: notifications-controller
-          image: quay.io/argoproj/argocd:v2.4.14
+          image: quay.io/argoproj/argocd:v2.5.0
           imagePullPolicy: IfNotPresent
-          resources:
-            {}
           command:
             - argocd-notifications
             - --loglevel=info
             - --logformat=text
+            - --metrics-port=9001
             - --namespace=default
             - --argocd-repo-server=foo-argocd-repo-server:8081
-          workingDir: /app
           ports:
+          - name: metrics
+            containerPort: 9001
+            protocol: TCP
+          resources:
+            {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          workingDir: /app
           volumeMounts:
             - name: tls-certs
               mountPath: /app/config/tls

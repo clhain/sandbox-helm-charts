@@ -31,4 +31,12 @@ rules:
       - pods/log
     verbs:
       - get
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - applications
+    verbs:
+      - get
+      - list
+      - watch
 ---
