@@ -8,8 +8,8 @@ metadata:
 stringData:
   oidc.clientId: "test"
   oidc.clientSecret: "test"
-  cookie-secret: "GSiPQalaco4X0LjiCgQzcPa9"
-  admin-password: "UYGmh5EqIZCrAe5ni0oLkmCE"
+  cookie-secret: "fY1tXwxiNjbTnnI7cNztrZtp"
+  admin-password: "UM6GcVja9zkJrGmRHHQ7izrs"
 ---
 # Source: sandbox-base/templates/sandbox-apps.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -36,9 +36,9 @@ spec:
         - name: clusterLocalAuth
           value: "true"
         - name: cookieSecret
-          value: "GSiPQalaco4X0LjiCgQzcPa9"
+          value: "fY1tXwxiNjbTnnI7cNztrZtp"
         - name: adminPass
-          value: "UYGmh5EqIZCrAe5ni0oLkmCE"
+          value: "UM6GcVja9zkJrGmRHHQ7izrs"
         - name: oidcClientID
           value: "test"
         - name: oidcClientSecret
