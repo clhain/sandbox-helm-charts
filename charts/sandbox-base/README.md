@@ -14,7 +14,7 @@ Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbo
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 5.5.16 |
+| https://argoproj.github.io/argo-helm | argo-cd | 5.12.1 |
 
 ## Values
 
