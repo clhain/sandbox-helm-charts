@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 50a9d14d8d54b4784585f97f250c506d6f611d41a4b981b6dbb942d3ed796c5e
+        checksum/cmd-params: 70625c4d05f374ed7c6d75d645fb3124d1dd7fd9eb4b8eb4bad4bfb31db44a9c
       labels:
         app.kubernetes.io/name: argocd-repo-server
         app.kubernetes.io/instance: foo
@@ -30,7 +30,7 @@ spec:
       automountServiceAccountToken: true
       containers:
       - name: repo-server
-        image: quay.io/argoproj/argocd:v2.4.14
+        image: quay.io/argoproj/argocd:v2.5.0
         imagePullPolicy: IfNotPresent
         command:
         - entrypoint.sh
@@ -97,6 +97,12 @@ spec:
                 name: argocd-cmd-params-cm
                 key: redis.server
                 optional: true
+          - name: REDIS_COMPRESSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.compression
+                optional: true
           - name: REDISDB
             valueFrom:
               configMapKeyRef:
@@ -139,6 +145,30 @@ spec:
                 name: argocd-cmd-params-cm
                 key: reposerver.plugin.tar.exclusions
                 optional: true
+          - name: ARGOCD_REPO_SERVER_ALLOW_OUT_OF_BOUNDS_SYMLINKS
+            valueFrom:
+              configMapKeyRef:
+                key: reposerver.allow.oob.symlinks
+                name: argocd-cmd-params-cm
+                optional: true
+          - name: ARGOCD_REPO_SERVER_STREAMED_MANIFEST_MAX_TAR_SIZE
+            valueFrom:
+              configMapKeyRef:
+                key: reposerver.streamed.manifest.max.tar.size
+                name: argocd-cmd-params-cm
+                optional: true
+          - name: ARGOCD_REPO_SERVER_STREAMED_MANIFEST_MAX_EXTRACTED_SIZE
+            valueFrom:
+              configMapKeyRef:
+                key: reposerver.streamed.manifest.max.extracted.size
+                name: argocd-cmd-params-cm
+                optional: true
+          - name: ARGOCD_GIT_MODULES_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                key: reposerver.enable.git.submodule
+                name: argocd-cmd-params-cm
+                optional: true
           - name: HELM_CACHE_HOME
             value: /helm-working-dir
           - name: HELM_CONFIG_HOME
@@ -146,60 +176,83 @@ spec:
           - name: HELM_DATA_HOME
             value: /helm-working-dir
         volumeMounts:
-        - mountPath: /app/config/gpg/source
-          name: gpg-keys
-        - mountPath: /app/config/gpg/keys
-          name: gpg-keyring
         - mountPath: /app/config/ssh
           name: ssh-known-hosts
         - mountPath: /app/config/tls
           name: tls-certs
+        - mountPath: /app/config/gpg/source
+          name: gpg-keys
+        - mountPath: /app/config/gpg/keys
+          name: gpg-keyring
         - mountPath: /app/config/reposerver/tls
           name: argocd-repo-server-tls
-        - mountPath: /tmp
-          name: tmp-dir
         - mountPath: /helm-working-dir
           name: helm-working-dir
         - mountPath: /home/argocd/cmp-server/plugins
           name: plugins
+        - mountPath: /tmp
+          name: tmp
         ports:
         - name: repo-server
           containerPort: 8081
           protocol: TCP
-        
+        - name: metrics
+          containerPort: 8084
+          protocol: TCP
         livenessProbe:
-          tcpSocket:
-            port: 8081
+          httpGet:
+            path: /healthz?full=true
+            port: metrics
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 1
           successThreshold: 1
           failureThreshold: 3
         readinessProbe:
-          tcpSocket:
-            port: 8081
+          httpGet:
+            path: /healthz
+            port: metrics
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 1
           successThreshold: 1
           failureThreshold: 3
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
       serviceAccountName: foo-argocd-repo-server
       volumes:
+      - name: helm-working-dir
+        emptyDir: {}
+      - name: plugins
+        emptyDir: {}
+      - name: var-files
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+      - name: ssh-known-hosts
+        configMap:
+          name: argocd-ssh-known-hosts-cm
+      - name: tls-certs
+        configMap:
+          name: argocd-tls-certs-cm
       - name: gpg-keys
         configMap:
           name: argocd-gpg-keys-cm
-      - emptyDir: {}
-        name: gpg-keyring
-      - configMap:
-          name: argocd-ssh-known-hosts-cm
-        name: ssh-known-hosts
-      - configMap:
-          name: argocd-tls-certs-cm
-        name: tls-certs
-      - name: helm-working-dir
+      - name: gpg-keyring
         emptyDir: {}
       - name: argocd-repo-server-tls
         secret:
+          secretName: argocd-repo-server-tls
+          optional: true
           items:
           - key: tls.crt
             path: tls.crt
@@ -207,23 +260,24 @@ spec:
             path: tls.key
           - key: ca.crt
             path: ca.crt
-          optional: true
-          secretName: argocd-repo-server-tls
-      - emptyDir: {}
-        name: tmp-dir
-      - emptyDir: {}
-        name: var-files
-      - emptyDir: {}
-        name: plugins
       initContainers:
       - command:
         - cp
         - -n
         - /usr/local/bin/argocd
         - /var/run/argocd/argocd-cmp-server
-        image: quay.io/argoproj/argocd:v2.4.14
+        image: quay.io/argoproj/argocd:v2.5.0
         imagePullPolicy: IfNotPresent
         name: copyutil
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
         volumeMounts:
         - mountPath: /var/run/argocd
           name: var-files

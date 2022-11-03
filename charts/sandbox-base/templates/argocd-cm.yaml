@@ -12,7 +12,7 @@ metadata:
   namespace: argocd
 data:
   admin.enabled: "true"
-  application.instanceLabelKey: argocd.argoproj.io/instance
+  application.resourceTrackingMethod: annotation
   exec.enabled: "false"
   oidc.config: |
     name: OIDC
