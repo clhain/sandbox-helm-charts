@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 50a9d14d8d54b4784585f97f250c506d6f611d41a4b981b6dbb942d3ed796c5e
+        checksum/cmd-params: 70625c4d05f374ed7c6d75d645fb3124d1dd7fd9eb4b8eb4bad4bfb31db44a9c
       labels:
         app.kubernetes.io/name: argocd-server
         app.kubernetes.io/instance: foo
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: quay.io/argoproj/argocd:v2.4.14
+        image: quay.io/argoproj/argocd:v2.5.0
         imagePullPolicy: IfNotPresent
         command:
         - argocd-server
@@ -58,7 +58,7 @@ spec:
                 name: argocd-cmd-params-cm
                 key: server.log.format
                 optional: true
-          - name: ARGOCD_REPO_SERVER_LOGLEVEL
+          - name: ARGOCD_SERVER_LOG_LEVEL
             valueFrom:
               configMapKeyRef:
                 name: argocd-cmd-params-cm
@@ -118,6 +118,18 @@ spec:
                 name: argocd-cmd-params-cm
                 key: server.repo.server.strict.tls
                 optional: true
+          - name: ARGOCD_SERVER_DEX_SERVER_PLAINTEXT
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.dex.server.plaintext
+                optional: true
+          - name: ARGOCD_SERVER_DEX_SERVER_STRICT_TLS
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.dex.server.strict.tls
+                optional: true
           - name: ARGOCD_TLS_MIN_VERSION
             valueFrom:
               configMapKeyRef:
@@ -172,6 +184,12 @@ spec:
                 name: argocd-cmd-params-cm
                 key: redis.server
                 optional: true
+          - name: REDIS_COMPRESSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: redis.compression
+                optional: true
           - name: REDISDB
             valueFrom:
               configMapKeyRef:
@@ -208,6 +226,12 @@ spec:
                 name: argocd-cmd-params-cm
                 key: otlp.address
                 optional: true
+          - name: ARGOCD_APPLICATION_NAMESPACES
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: application.namespaces
+                optional: true
         volumeMounts:
         - mountPath: /app/config/ssh
           name: ssh-known-hosts
@@ -215,18 +239,24 @@ spec:
           name: tls-certs
         - mountPath: /app/config/server/tls
           name: argocd-repo-server-tls
+        - mountPath: /app/config/dex/tls
+          name: argocd-dex-server-tls
         - mountPath: /home/argocd
           name: plugins-home
+        - mountPath: /shared/app/custom
+          name: styles
         - mountPath: /tmp
-          name: tmp-dir
+          name: tmp
         ports:
         - name: server
           containerPort: 8080
           protocol: TCP
-        
+        - name: metrics
+          containerPort: 8083
+          protocol: TCP
         livenessProbe:
           httpGet:
-            path: /healthz
+            path: /healthz?full=true
             port: 8080
           initialDelaySeconds: 10
           periodSeconds: 10
@@ -242,18 +272,37 @@ spec:
           timeoutSeconds: 1
           successThreshold: 1
           failureThreshold: 3
+        resources:
+          {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
       serviceAccountName: argocd-server
       volumes:
-      - emptyDir: {}
-        name: tmp-dir
-      - configMap:
+      - name: plugins-home
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}
+      - name: ssh-known-hosts
+        configMap:
           name: argocd-ssh-known-hosts-cm
-        name: ssh-known-hosts
-      - configMap:
+      - name: tls-certs
+        configMap:
           name: argocd-tls-certs-cm
-        name: tls-certs
+      - name: styles
+        configMap:
+          name: argocd-styles-cm
+          optional: true
       - name: argocd-repo-server-tls
         secret:
+          secretName: argocd-repo-server-tls
+          optional: true
           items:
           - key: tls.crt
             path: tls.crt
@@ -261,8 +310,13 @@ spec:
             path: tls.key
           - key: ca.crt
             path: ca.crt
+      - name: argocd-dex-server-tls
+        secret:
+          secretName: argocd-dex-server-tls
           optional: true
-          secretName: argocd-repo-server-tls
-      - emptyDir: {}
-        name: plugins-home
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: ca.crt
+            path: ca.crt
 ---

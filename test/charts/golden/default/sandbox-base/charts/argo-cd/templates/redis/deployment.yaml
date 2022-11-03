@@ -22,23 +22,30 @@ spec:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: argocd
     spec:
-      automountServiceAccountToken: false
-      serviceAccountName: default
       securityContext:
         runAsNonRoot: true
         runAsUser: 999
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: default
       containers:
-      - name: foo-argocd-redis
+      - name: redis
+        image: public.ecr.aws/docker/library/redis:7.0.5-alpine
+        imagePullPolicy: IfNotPresent
         args:
         - --save
         - ""
         - --appendonly
         - "no"
-        image: public.ecr.aws/docker/library/redis:7.0.5-alpine
-        imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 6379
-          name: redis
+        - name: redis
+          containerPort: 6379
+          protocol: TCP
         resources:
           {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
 ---
