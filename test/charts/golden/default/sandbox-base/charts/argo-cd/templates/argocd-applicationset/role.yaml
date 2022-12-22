@@ -51,8 +51,19 @@ rules:
   - apiGroups:
     - ""
     resources:
-    - secrets
     - configmaps
+    verbs:
+    - create
+    - update
+    - delete
+    - get
+    - list
+    - patch
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
     verbs:
     - get
     - list
@@ -66,16 +77,6 @@ rules:
     - get
     - list
     - watch
-  # Leader election
-  - apiGroups:
-    - ""
-    resources:
-    - configmaps
-    verbs:
-    - create
-    - update
-    - delete
-    - patch
   - apiGroups:
     - coordination.k8s.io
     resources:

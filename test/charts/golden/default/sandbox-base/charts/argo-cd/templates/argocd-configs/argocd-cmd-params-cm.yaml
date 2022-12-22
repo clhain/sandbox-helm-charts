@@ -30,6 +30,7 @@ data:
   server.insecure: "false"
   server.log.format: text
   server.log.level: info
+  server.repo.server.strict.tls: "false"
   server.rootpath: ""
   server.staticassets: /shared/app
   server.x.frame.options: sameorigin

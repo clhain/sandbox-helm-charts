@@ -11,6 +11,7 @@ metadata:
     app.kubernetes.io/part-of: argocd
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app.kubernetes.io/name: argocd-applicationset-controller
@@ -27,21 +28,21 @@ spec:
       serviceAccountName: foo-argocd-applicationset-controller
       containers:
         - name: applicationset-controller
-          image: quay.io/argoproj/argocd:v2.5.0
+          image: quay.io/argoproj/argocd:v2.5.5
           imagePullPolicy: IfNotPresent
           command:
             - entrypoint.sh
             - argocd-applicationset-controller
+            - --argocd-repo-server=foo-argocd-repo-server:8081
+            - --enable-leader-election=false
+            - --metrics-addr=:8080
+            - --probe-addr=:8081
+            - --policy=sync
+            - --dry-run=false
             - --logformat
             - text
             - --loglevel
             - info
-            - --metrics-addr=:8080
-            - --probe-addr=:8081
-            - --argocd-repo-server=foo-argocd-repo-server:8081
-            - --policy=sync
-            - --debug=false
-            - --dry-run=false
           env:
             - name: NAMESPACE
               valueFrom:
