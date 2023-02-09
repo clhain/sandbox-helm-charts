@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 5e681dc349c0a806c1330732707fae2d2b47ff522c4852268b7db32f95e7d5c5
+        checksum/cmd-params: 92391b18b0763e86fb62acbd4c610b1cda762553e6876497532f96149ba383f0
       labels:
         app.kubernetes.io/name: argocd-server
         app.kubernetes.io/instance: foo
@@ -29,10 +29,12 @@ spec:
     spec:
       containers:
       - name: server
-        image: quay.io/argoproj/argocd:v2.5.5
+        image: quay.io/argoproj/argocd:v2.6.1
         imagePullPolicy: IfNotPresent
         command:
         - argocd-server
+        - --port=8080
+        - --metrics-port=8082
         env:
           - name: ARGOCD_SERVER_INSECURE
             valueFrom:
@@ -232,6 +234,12 @@ spec:
                 name: argocd-cmd-params-cm
                 key: application.namespaces
                 optional: true
+          - name: ARGOCD_SERVER_ENABLE_PROXY_EXTENSION
+            valueFrom:
+              configMapKeyRef:
+                name: argocd-cmd-params-cm
+                key: server.enable.proxy.extension
+                optional: true
         volumeMounts:
         - mountPath: /app/config/ssh
           name: ssh-known-hosts
@@ -252,12 +260,12 @@ spec:
           containerPort: 8080
           protocol: TCP
         - name: metrics
-          containerPort: 8083
+          containerPort: 8082
           protocol: TCP
         livenessProbe:
           httpGet:
             path: /healthz?full=true
-            port: 8080
+            port: server
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 1
@@ -266,7 +274,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /healthz
-            port: 8080
+            port: server
           initialDelaySeconds: 10
           periodSeconds: 10
           timeoutSeconds: 1
@@ -319,4 +327,6 @@ spec:
             path: tls.crt
           - key: ca.crt
             path: ca.crt
+      hostNetwork: false
+      dnsPolicy: ClusterFirst
 ---

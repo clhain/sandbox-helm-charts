@@ -10,6 +10,11 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: argocd
 data:
+  applicationsetcontroller.enable.leader.election: "false"
+  applicationsetcontroller.enable.progressive.syncs: "false"
+  applicationsetcontroller.log.format: text
+  applicationsetcontroller.log.level: info
+  applicationsetcontroller.policy: sync
   controller.log.format: text
   controller.log.level: info
   controller.operation.processors: "10"
