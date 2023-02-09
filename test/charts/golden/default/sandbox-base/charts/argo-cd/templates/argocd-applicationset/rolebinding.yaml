@@ -15,6 +15,6 @@ roleRef:
   name: foo-argocd-applicationset-controller
 subjects:
   - kind: ServiceAccount
-    name: foo-argocd-applicationset-controller
+    name: argocd-applicationset-controller
     namespace: default
 ---

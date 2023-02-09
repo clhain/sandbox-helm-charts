@@ -21,7 +21,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 5e681dc349c0a806c1330732707fae2d2b47ff522c4852268b7db32f95e7d5c5
+        checksum/cmd-params: 92391b18b0763e86fb62acbd4c610b1cda762553e6876497532f96149ba383f0
       labels:
         app.kubernetes.io/name: argocd-application-controller
         app.kubernetes.io/instance: foo
@@ -32,7 +32,8 @@ spec:
       containers:
       - command:
         - argocd-application-controller
-        image: quay.io/argoproj/argocd:v2.5.5
+        - --metrics-port=8082
+        image: quay.io/argoproj/argocd:v2.6.1
         imagePullPolicy: IfNotPresent
         name: application-controller
         env:
@@ -215,4 +216,6 @@ spec:
             path: tls.key
           - key: ca.crt
             path: ca.crt
+      hostNetwork: false
+      dnsPolicy: ClusterFirst
 ---

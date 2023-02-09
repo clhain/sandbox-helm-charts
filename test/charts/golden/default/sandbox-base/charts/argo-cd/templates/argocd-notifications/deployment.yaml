@@ -30,13 +30,13 @@ spec:
       serviceAccountName: argocd-notifications-controller
       containers:
         - name: notifications-controller
-          image: quay.io/argoproj/argocd:v2.5.5
+          image: quay.io/argoproj/argocd:v2.6.1
           imagePullPolicy: IfNotPresent
           command:
             - argocd-notifications
+            - --metrics-port=9001
             - --loglevel=info
             - --logformat=text
-            - --metrics-port=9001
             - --namespace=default
             - --argocd-repo-server=foo-argocd-repo-server:8081
           ports:
@@ -61,11 +61,13 @@ spec:
             - name: argocd-repo-server-tls
               mountPath: /app/config/reposerver/tls
       volumes:
-        - configMap:
+        - name: tls-certs
+          configMap:
             name: argocd-tls-certs-cm
-          name: tls-certs
         - name: argocd-repo-server-tls
           secret:
+            secretName: argocd-repo-server-tls
+            optional: true
             items:
             - key: tls.crt
               path: tls.crt
@@ -73,6 +75,4 @@ spec:
               path: tls.key
             - key: ca.crt
               path: ca.crt
-            optional: true
-            secretName: argocd-repo-server-tls
 ---
