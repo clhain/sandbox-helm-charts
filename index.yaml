@@ -126,6 +126,23 @@ entries:
   sandbox-base:
   - apiVersion: v2
     appVersion: "1.0"
+    created: "2023-02-09T21:11:43.880922142Z"
+    dependencies:
+    - name: argo-cd
+      repository: https://argoproj.github.io/argo-helm
+      version: 5.20.3
+    description: Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbox-Apps chart.
+    digest: fe718d002aa477892595af39c89629d161b6f6150f95a649c013150459285d7c
+    maintainers:
+    - email: clhain@gmail.com
+      name: clhain
+    name: sandbox-base
+    type: application
+    urls:
+    - https://github.com/clhain/sandbox-helm-charts/releases/download/sandbox-base-0.0.13/sandbox-base-0.0.13.tgz
+    version: 0.0.13
+  - apiVersion: v2
+    appVersion: "1.0"
     created: "2022-12-22T05:14:07.531792587Z"
     dependencies:
     - name: argo-cd
