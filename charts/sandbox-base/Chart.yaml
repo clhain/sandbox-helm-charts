@@ -3,13 +3,8 @@ appVersion: "1.0"
 dependencies:
 - name: argo-cd
   repository: https://argoproj.github.io/argo-helm
-<<<<<<< HEAD
   version: 5.20.3
-=======
-  version: 5.19.15
->>>>>>> 17fb50c (feat: upgrade helm charts)
-description: Base chart installer for the Sandbox Cluster. Installs ArgoCD followed
-  by Sandbox-Apps chart.
+description: Base chart installer for the Sandbox Cluster. Installs ArgoCD followed by Sandbox-Apps chart.
 maintainers:
 - email: clhain@gmail.com
   name: clhain
