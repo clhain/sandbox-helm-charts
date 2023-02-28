@@ -30,7 +30,7 @@ spec:
       serviceAccountName: argocd-notifications-controller
       containers:
         - name: notifications-controller
-          image: quay.io/argoproj/argocd:v2.6.1
+          image: quay.io/argoproj/argocd:v2.6.2
           imagePullPolicy: IfNotPresent
           command:
             - argocd-notifications
@@ -60,6 +60,15 @@ spec:
               mountPath: /app/config/tls
             - name: argocd-repo-server-tls
               mountPath: /app/config/reposerver/tls
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: argocd-notifications-controller
+              topologyKey: kubernetes.io/hostname
       volumes:
         - name: tls-certs
           configMap:
@@ -75,4 +84,5 @@ spec:
               path: tls.key
             - key: ca.crt
               path: ca.crt
+      dnsPolicy: ClusterFirst
 ---

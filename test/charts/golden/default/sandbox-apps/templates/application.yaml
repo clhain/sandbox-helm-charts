@@ -151,10 +151,10 @@ spec:
     repoURL: https://github.com/clhain/sandbox.git
     targetRevision: HEAD
   ignoreDifferences:
-  - group: apiextensions.k8s.io
-    kind: CustomResourceDefinition
+  - group: apps
+    kind: StatefulSet
     jsonPointers:
-    - /metadata/annotations
+    - /spec/persistentVolumeClaimRetentionPolicy
 ---
 # Source: sandbox-apps/templates/application.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -341,7 +341,7 @@ spec:
   source:
     path: charts/kube-prometheus-stack/crds/
     repoURL: https://github.com/prometheus-community/helm-charts.git
-    targetRevision: kube-prometheus-stack-39.9.0
+    targetRevision: kube-prometheus-stack-45.4.0
     directory:
       recurse: true
     

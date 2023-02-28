@@ -21,7 +21,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 92391b18b0763e86fb62acbd4c610b1cda762553e6876497532f96149ba383f0
+        checksum/cmd-params: 2f79f9b67df0c0701cdfbe155f89c9dda799ab65ff2213d88511caab6a75f908
       labels:
         app.kubernetes.io/name: argocd-application-controller
         app.kubernetes.io/instance: foo
@@ -29,11 +29,12 @@ spec:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: argocd
     spec:
+      serviceAccountName: argocd-application-controller
       containers:
       - command:
         - argocd-application-controller
         - --metrics-port=8082
-        image: quay.io/argoproj/argocd:v2.6.1
+        image: quay.io/argoproj/argocd:v2.6.2
         imagePullPolicy: IfNotPresent
         name: application-controller
         env:
@@ -201,7 +202,15 @@ spec:
           name: argocd-repo-server-tls
         - mountPath: /home/argocd
           name: argocd-home
-      serviceAccountName: argocd-application-controller
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: argocd-application-controller
+              topologyKey: kubernetes.io/hostname
       volumes:
       - name: argocd-home
         emptyDir: {}

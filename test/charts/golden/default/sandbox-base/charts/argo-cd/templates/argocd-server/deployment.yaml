@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: 92391b18b0763e86fb62acbd4c610b1cda762553e6876497532f96149ba383f0
+        checksum/cmd-params: 2f79f9b67df0c0701cdfbe155f89c9dda799ab65ff2213d88511caab6a75f908
       labels:
         app.kubernetes.io/name: argocd-server
         app.kubernetes.io/instance: foo
@@ -27,9 +27,10 @@ spec:
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: argocd
     spec:
+      serviceAccountName: argocd-server
       containers:
       - name: server
-        image: quay.io/argoproj/argocd:v2.6.1
+        image: quay.io/argoproj/argocd:v2.6.2
         imagePullPolicy: IfNotPresent
         command:
         - argocd-server
@@ -291,7 +292,15 @@ spec:
           runAsNonRoot: true
           seccompProfile:
             type: RuntimeDefault
-      serviceAccountName: argocd-server
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: argocd-server
+              topologyKey: kubernetes.io/hostname
       volumes:
       - name: plugins-home
         emptyDir: {}
