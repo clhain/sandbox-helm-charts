@@ -1,6 +1,6 @@
 diff -bur test/charts/golden/default/sandbox-apps/templates/application.yaml test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml
---- test/charts/golden/default/sandbox-apps/templates/application.yaml	2023-02-28 19:35:22.730122207 +0000
-+++ test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml	2023-02-28 19:35:23.038126897 +0000
+--- test/charts/golden/default/sandbox-apps/templates/application.yaml	2023-02-28 19:46:12.213659673 +0000
++++ test/charts/golden/disable_local_auth/sandbox-apps/templates/application.yaml	2023-02-28 19:46:12.517664092 +0000
 @@ -247,7 +247,7 @@
        - name: clusterDomain
          value: "example.com"
@@ -11,14 +11,14 @@ diff -bur test/charts/golden/default/sandbox-apps/templates/application.yaml tes
          value: "false"
        - name: oidcIssuerURL
 diff -bur test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml test/charts/golden/disable_local_auth/sandbox-apps/templates/auth-secrets.yaml
---- test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml	2023-02-28 19:35:22.722122085 +0000
-+++ test/charts/golden/disable_local_auth/sandbox-apps/templates/auth-secrets.yaml	2023-02-28 19:35:23.030126776 +0000
+--- test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml	2023-02-28 19:46:12.205659557 +0000
++++ test/charts/golden/disable_local_auth/sandbox-apps/templates/auth-secrets.yaml	2023-02-28 19:46:12.509663975 +0000
 @@ -15,46 +15,6 @@
  stringData:
    client-id: "test"
    client-secret: "test"
--  cookie-secret: "JOMCNwt5ZPLw258UfOsYTbat"
--  admin-password: "np7iOt0qwhr8O10W1nX8WdqU"
+-  cookie-secret: "qS96Iz37xZRgx1G7nzRyNEtH"
+-  admin-password: "K0eDS0XVLD8ypbM2iLXLLHda"
 ----
 -# Source: sandbox-apps/templates/auth-secrets.yaml
 -apiVersion: v1
@@ -54,29 +54,29 @@ diff -bur test/charts/golden/default/sandbox-apps/templates/auth-secrets.yaml te
 -    enablePasswordDB: true
 -    staticPasswords:
 -    - email: "admin@example.com"
--      hash: "$2a$10$sSbbPycaU6GqyDRFdfTlD.IkP573LP6uzXYhaUg7gl.xW95NAnMLS"
+-      hash: "$2a$10$ENikGwl6LIbEYH8io04jUei2GBMKNYsiJr/KpQNThbGpDo1LKxtZS"
 -      username: "admin"
 -      userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
 -    logger:
 -      level: debug
-+  cookie-secret: "SVAvxgP6BkV6WJyQQvrRZG5R"
-+  admin-password: "uCLOcst6XQ8DKqAB6RFJriII"
++  cookie-secret: "ssbryTho0TwzDJzmfqt9e6SW"
++  admin-password: "d1KHB2TI5wwrd25zkho0M6Lo"
  ---
 Only in test/charts/golden/default/sandbox-apps/templates: oauth-proxy-secret.yaml
 Only in test/charts/golden/default/sandbox-base/charts/argo-cd/templates/argocd-application-controller: service.yaml
 Only in test/charts/golden/default/sandbox-base/charts/argo-cd/templates/argocd-configs: argocd-cm.yaml
 Only in test/charts/golden/default/sandbox-base/templates: argocd-oauth-secret.yaml
 diff -bur test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml
---- test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml	2023-02-28 19:35:22.966125801 +0000
-+++ test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml	2023-02-28 19:35:23.270130431 +0000
+--- test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml	2023-02-28 19:46:12.449663103 +0000
++++ test/charts/golden/disable_local_auth/sandbox-base/templates/sandbox-apps.yaml	2023-02-28 19:46:12.757667534 +0000
 @@ -8,8 +8,8 @@
  stringData:
    oidc.clientId: "test"
    oidc.clientSecret: "test"
--  cookie-secret: "j4ESVapKgmiS8S3Z6WFbmF1q"
--  admin-password: "IYj7WYGUKzLOxwQOQppmKZMp"
-+  cookie-secret: "D0nRL9jHz01Uv61AGiTxYh8S"
-+  admin-password: "z0XkjdEdDmXwlVxn0dmGRRqM"
+-  cookie-secret: "bKIho9Cq6FiGse94MdUWAgTW"
+-  admin-password: "H6h875c4NoOJLybaU6rjGD9q"
++  cookie-secret: "x3VIxPpLHQTJah0biCI8lGxW"
++  admin-password: "NkpKl7oyILe1ttyzBjQWljoh"
  ---
  # Source: sandbox-base/templates/sandbox-apps.yaml
  apiVersion: argoproj.io/v1alpha1
@@ -87,11 +87,11 @@ diff -bur test/charts/golden/default/sandbox-base/templates/sandbox-apps.yaml te
 -          value: "true"
 +          value: "false"
          - name: cookieSecret
--          value: "j4ESVapKgmiS8S3Z6WFbmF1q"
-+          value: "D0nRL9jHz01Uv61AGiTxYh8S"
+-          value: "bKIho9Cq6FiGse94MdUWAgTW"
++          value: "x3VIxPpLHQTJah0biCI8lGxW"
          - name: adminPass
--          value: "IYj7WYGUKzLOxwQOQppmKZMp"
-+          value: "z0XkjdEdDmXwlVxn0dmGRRqM"
+-          value: "H6h875c4NoOJLybaU6rjGD9q"
++          value: "NkpKl7oyILe1ttyzBjQWljoh"
          - name: oidcClientID
            value: "test"
          - name: oidcClientSecret
