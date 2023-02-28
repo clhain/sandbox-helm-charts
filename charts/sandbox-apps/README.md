@@ -1,6 +1,6 @@
 # sandbox-apps
 
-![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
+![Version: 0.0.11](https://img.shields.io/badge/Version-0.0.11-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0](https://img.shields.io/badge/AppVersion-1.0-informational?style=flat-square)
 
 Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial configuration.
 
@@ -39,6 +39,7 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.grafana.syncWave | string | `"6"` |  |
 | apps.loki.destination.namespace | string | `"loki"` |  |
 | apps.loki.enabled | bool | `true` |  |
+| apps.loki.extraFields | string | `"ignoreDifferences:\n- group: apps\n  kind: StatefulSet\n  jsonPointers:\n  - /spec/persistentVolumeClaimRetentionPolicy\n"` |  |
 | apps.loki.source.path | string | `"services/loki"` |  |
 | apps.loki.syncWave | string | `"5"` |  |
 | apps.nginx-ingress.destination.namespace | string | `"nginx-ingress"` |  |
@@ -70,7 +71,7 @@ Sandbox Apps Helm Installer - deploys a collection of ArgoCD apps with initial c
 | apps.prometheus-operator-crds.source.extraSourceFields | string | `"directory:\n  recurse: true\n"` |  |
 | apps.prometheus-operator-crds.source.path | string | `"charts/kube-prometheus-stack/crds/"` |  |
 | apps.prometheus-operator-crds.source.repoURL | string | `"https://github.com/prometheus-community/helm-charts.git"` |  |
-| apps.prometheus-operator-crds.source.targetRevision | string | `"kube-prometheus-stack-39.9.0"` |  |
+| apps.prometheus-operator-crds.source.targetRevision | string | `"kube-prometheus-stack-45.4.0"` |  |
 | apps.prometheus-operator-crds.syncOptions[0] | string | `"CreateNamespace=true"` |  |
 | apps.prometheus-operator-crds.syncOptions[1] | string | `"Replace=true"` |  |
 | apps.prometheus-operator-crds.syncWave | string | `"1"` |  |

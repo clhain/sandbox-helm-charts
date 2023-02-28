@@ -28,7 +28,7 @@ spec:
       serviceAccountName: argocd-applicationset-controller
       containers:
         - name: applicationset-controller
-          image: quay.io/argoproj/argocd:v2.6.1
+          image: quay.io/argoproj/argocd:v2.6.2
           imagePullPolicy: IfNotPresent
           command:
             - entrypoint.sh
@@ -98,7 +98,7 @@ spec:
             - name: ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_PROGRESSIVE_SYNCS
               valueFrom:
                 configMapKeyRef:
-                  key: applicationsetcontroller.enable.progressive.rollouts
+                  key: applicationsetcontroller.enable.progressive.syncs
                   name: argocd-cmd-params-cm
                   optional: true
           ports:
@@ -133,6 +133,15 @@ spec:
               name: gpg-keyring
             - mountPath: /tmp
               name: tmp
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: argocd-applicationset-controller
+              topologyKey: kubernetes.io/hostname
       volumes:
         - name: ssh-known-hosts
           configMap:
@@ -147,4 +156,5 @@ spec:
           emptyDir: {}
         - name: tmp
           emptyDir: {}
+      dnsPolicy: ClusterFirst
 ---
